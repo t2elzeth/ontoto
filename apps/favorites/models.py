@@ -21,6 +21,7 @@ class Favorite(models.Model):
 class FavoriteProduct(models.Model):
     user = models.ForeignKey('auth_app.Customer', on_delete=models.CASCADE)
     favorite = models.ForeignKey(Favorite, on_delete=models.CASCADE, related_name='related_favorites')
+
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')

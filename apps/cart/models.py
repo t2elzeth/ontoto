@@ -15,7 +15,6 @@ class Cart(models.Model):
     total_products = models.PositiveIntegerField('Всего продуктов', default=0)
     total_price = models.DecimalField(verbose_name='Общая цена', default=0, decimal_places=2, max_digits=9)
     in_order = models.BooleanField(default=False)
-    for_anonymous_user = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
@@ -24,9 +23,11 @@ class Cart(models.Model):
 class CartProduct(models.Model):
     user = models.ForeignKey('auth_app.Customer', on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='related_products')
+
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
+
     qty = models.PositiveIntegerField('Количество')
     final_price = models.DecimalField(decimal_places=2, max_digits=9, verbose_name='Общая цена', default=0)
 
