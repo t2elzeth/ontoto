@@ -5,9 +5,14 @@ from django.db import models
 
 # Create your models here.
 class Category(models.Model):
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='subcategories', blank=True, null=True)
     title = models.CharField(verbose_name='', max_length=255)
     slug = models.SlugField()
+
+    def __str__(self):
+        return '{}, ({})'.format(self.title, self.slug)
+
+class Subcategory(Category):
+    parent = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories', blank=True, null=True)
 
     def __str__(self):
         return '{}, ({})'.format(self.title, self.slug)
@@ -15,6 +20,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, null=True, related_name='products')
 
     title = models.CharField(verbose_name='', max_length=255)
     description = models.TextField(verbose_name='Описание', null=True, blank=True)
