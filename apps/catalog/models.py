@@ -30,7 +30,7 @@ class Product(models.Model):
     old_price = models.DecimalField(verbose_name='Старая цена', decimal_places=2, max_digits=9, default=0)
 
     orders_number = models.PositiveIntegerField(verbose_name='Кол-во покупок', default=0)
-    favorites = models.PositiveIntegerField(verbose_name='Кол-во избранных', default=0)
+    favorites_number = models.PositiveIntegerField(verbose_name='Кол-во избранных', default=0)
     changes_number = models.PositiveIntegerField(verbose_name='Кол-во изменений', default=0)
 
     date_created = models.DateField(auto_now=True)
