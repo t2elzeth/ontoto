@@ -1,5 +1,5 @@
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
+import os
+
 from django.db import models
 
 
@@ -39,3 +39,6 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.product.title
+
+    def image_name(self):
+        return os.path.basename(self.image.name)
