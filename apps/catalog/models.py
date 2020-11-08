@@ -19,8 +19,8 @@ class Subcategory(Category):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, null=True, related_name='products')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category_products')
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, null=True, related_name='subcategory_products')
 
     title = models.CharField(verbose_name='', max_length=255)
     description = models.TextField(verbose_name='Описание', null=True, blank=True)
