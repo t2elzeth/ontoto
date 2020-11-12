@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
-import os, sys
+import os
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
     'djoser',
 
     # own
-    'auth_app',
+    # 'auth_app',
     # 'favorites',
     # 'cart',
     'catalog',
@@ -109,17 +110,17 @@ REST_FRAMEWORK = {
 }
 
 
-AUTH_USER_MODEL = 'auth_app.Customer'
+# AUTH_USER_MODEL = 'auth_app.Customer'
 
 
-DJOSER = {
-    'LOGIN_FIELD': 'email',
-    'USER_CREATE_PASSWORD_RETYPE': True,
-    'SERIALIZERS': {
-        'user_create': 'auth_app.serializers.CustomUserCreateSerializer',
-        'user': 'auth_app.serializers.CustomUserCreateSerializer',
-    }
-}
+# DJOSER = {
+#     'LOGIN_FIELD': 'email',
+#     'USER_CREATE_PASSWORD_RETYPE': True,
+#     'SERIALIZERS': {
+#         'user_create': 'auth_app.serializers.CustomUserCreateSerializer',
+#         'user': 'auth_app.serializers.CustomUserCreateSerializer',
+#     }
+# }
 
 
 # Password validation
@@ -161,5 +162,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-
