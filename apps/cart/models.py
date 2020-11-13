@@ -47,7 +47,8 @@ class Cart(models.Model):
 
 class CartProduct(models.Model):
     """Cart Product model to save products in Cart"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='cart_products')
     cart = models.ForeignKey(
         Cart, on_delete=models.CASCADE, related_name='cart_products')
 
