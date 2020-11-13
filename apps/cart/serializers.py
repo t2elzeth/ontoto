@@ -5,7 +5,13 @@ from rest_framework import serializers
 from . import models
 
 
-class CartProductCreateSerializer(serializers.ModelSerializer):
+class CartProductCreateOrDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CartProduct
+        fields = [
+            'product', 'qty'
+        ]
+
     def create(self, validated_data: dict):
         """
         Create new CartProduct object instance by adding 
@@ -30,8 +36,8 @@ class CartProductCreateSerializer(serializers.ModelSerializer):
         cp.save()
         return cp
 
+
+class CartProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CartProduct
-        fields = [
-            'product', 'qty'
-        ]
+        fields = '__all__'
