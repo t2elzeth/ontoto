@@ -18,7 +18,7 @@ class CartProductCreateView(generics.CreateAPIView):
     ]
 
 
-class CartProductDetailView(generics.DestroyAPIView):
+class CartProductDetailView(generics.RetrieveDestroyAPIView):
     serializer_class = serializers.CartProductCreateOrDetailSerializer
     queryset = models.CartProduct.objects.all()
     permission_classes = [
