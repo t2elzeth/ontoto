@@ -7,7 +7,6 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-# Create your models here.
 class Cart(models.Model):
     """Cart model"""
     user = models.ForeignKey(
