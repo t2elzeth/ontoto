@@ -1,21 +1,23 @@
+import logging
+import os
+
 from django.shortcuts import render
 from django.views import View
+from django.conf import settings
 
 from rest_framework import generics
 
 
 from . import models, serializers
 
+
+logging.basicConfig(
+    filename=os.path.join(settings.BASE_DIR, 'app.log'),
+    filemode='w',
+    level=logging.INFO
+)
+
 # Create your views here.
-
-
-class CategoriesAllView(View):
-    def get(self, request):
-        queryset = models.Category.objects.all()
-        context = {
-            'queryset': queryset
-        }
-        return render(request, 'catalog/index.html', context)
 
 
 class ProductsListView(generics.ListAPIView):

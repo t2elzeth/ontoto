@@ -1,4 +1,11 @@
 from django.shortcuts import render
 
+from rest_framework import generics
+
+from . import serializers
+
 # Create your views here.
-# TODO: Create views
+
+
+class CartProductCreateView(generics.CreateAPIView):
+    serializer_class = serializers.CartProductCreateSerializer
