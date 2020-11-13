@@ -62,6 +62,8 @@ class CartProduct(models.Model):
     final_price = models.DecimalField(
         decimal_places=2, max_digits=9, verbose_name='Общая цена', default=0)
 
+    date_added = models.DateTimeField(auto_now=True)
+
     def count_final_price(self):
         """Counts final price, but doesn't save the changes"""
         self.final_price = self.product.price * self.qty

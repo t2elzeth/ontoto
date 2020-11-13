@@ -7,7 +7,7 @@ class IsOwner(permissions.BasePermission):
 
 
 class CartIsNotInOrder(permissions.BasePermission):
-    message = 'Cannot perform changing Cart. It is already in order'
+    message = 'Cannot perform deleting Product. It is already in order'
 
     def has_object_permission(self, request, view, obj):
         return not obj.cart.in_order
