@@ -18,19 +18,20 @@ class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Product
         fields = [
-            'category', 'subcategory',
+            'id', 'category', 'subcategory',
             'title', 'description',
             'price', 'old_price', 'available',
             'orders_number', 'favorites_number', 'changes_number',
             'date_created'
         ]
+        depth = 2
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Product
         fields = [
-            'category', 'subcategory',
+            'id', 'category', 'subcategory',
             'title', 'description',
             'price', 'old_price', 'available',
             'orders_number', 'favorites_number', 'changes_number',

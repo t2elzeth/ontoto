@@ -13,7 +13,7 @@ class Cart(models.Model):
         User,
         verbose_name='Владелец',
         on_delete=models.CASCADE,
-        related_name='cart'
+        related_name='carts'
     )
     total_products = models.PositiveIntegerField('Всего продуктов', default=0)
     total_price = models.DecimalField(
@@ -26,9 +26,9 @@ class Cart(models.Model):
         but doesn't save the changes
         """
         self.total_products = sum(
-            cp.qty for cp in self.related_products.all())
+            cp.qty for cp in self.cart_products.all())
         self.total_price = sum(
-            cp.final_price for cp in self.related_products.all())
+            cp.final_price for cp in self.cart_products.all())
 
     def count_totals_and_save(self):
         """
@@ -49,11 +49,12 @@ class CartProduct(models.Model):
     """Cart Product model to save products in Cart"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     cart = models.ForeignKey(
-        Cart, on_delete=models.CASCADE, related_name='related_products')
+        Cart, on_delete=models.CASCADE, related_name='cart_products')
 
     product = models.ForeignKey(
         'catalog.Product',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='cart_products'
     )
     # object_id = models.PositiveIntegerField()
     # content_object = GenericForeignKey('content_type', 'object_id')
@@ -88,7 +89,4 @@ class CartProduct(models.Model):
         self.cart.count_totals_and_save()
 
     def __str__(self):
-        return "{} in {}".format(
-            self.product.title,
-            self.cart
-        )
+        return "{} in {}".format(self.product.title, self.cart)

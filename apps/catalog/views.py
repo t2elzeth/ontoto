@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views import View
 from django.conf import settings
 
-from rest_framework import generics
+from rest_framework import generics, permissions
 
 
 from . import models, serializers
@@ -27,9 +27,12 @@ class ProductsListView(generics.ListAPIView):
 
 class ProductCreateView(generics.CreateAPIView):
     serializer_class = serializers.ProductCreateSerializer
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
 
-    # def perform_create(self, serializer):
-    #     serializer.save()
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):

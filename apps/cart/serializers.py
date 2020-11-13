@@ -23,12 +23,12 @@ class CartProductCreateOrDetailSerializer(serializers.ModelSerializer):
 
         user = request.user
 
-        cart, _ = user.cart.get_or_create(user=user, in_order=False)
+        cart, _ = user.carts.get_or_create(user=user, in_order=False)
 
         product = validated_data.get('product')
         qty = validated_data.get('qty')
 
-        cp, _ = cart.related_products.get_or_create(
+        cp, _ = cart.cart_products.get_or_create(
             product=product,
             defaults={
                 'user': user,

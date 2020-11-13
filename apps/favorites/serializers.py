@@ -27,7 +27,7 @@ class FavoriteProductCreateSerializer(serializers.ModelSerializer):
         user = request.user
 
         product = validated_data.get('product')
-        favorite, _ = user.favorite.get_or_create(user=user)
+        favorite, _ = user.favorites.get_or_create(user=user)
 
         validated_data['user'] = user
         validated_data['favorite'] = favorite
