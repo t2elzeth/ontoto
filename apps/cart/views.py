@@ -3,7 +3,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 
 from . import serializers, models
-from .permissions import IsOwner
+from .permissions import IsOwner, CartIsNotInOrder
 
 
 class CartProductListView(generics.ListAPIView):
@@ -22,5 +22,5 @@ class CartProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.CartProductCreateOrDetailSerializer
     queryset = models.CartProduct.objects.all()
     permission_classes = [
-        IsOwner
+        IsOwner, CartIsNotInOrder
     ]
