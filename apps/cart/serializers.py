@@ -17,19 +17,19 @@ class CartProductCreateSerializer(serializers.ModelSerializer):
             }
             return serializers.ValidationError(error)
 
-        cart = user.cart.get_or_create(user=user, in_order=False)
+        cart, _ = user.cart.get_or_create(user=user, in_order=False)
 
         product = validated_data.get('product')
         qty = validated_data.get('qty')
 
-        try:
-            cp = cart.related_products.get(product=product)
-            cp.qty = qty + cp.qty
-            cp.save()
-        except:
-            validated_data['user'] = user
-            validated_data['cart'] = cart
-            cp = models.CartProduct.objects.create(**validated_data)
+        cp, _ = cart.related_products.get_or_create(
+            product=product,
+            defaults={
+                'user': user,
+                'cart': cart
+            })
+        cp.qty += qty
+        cp.save()
         return cp
 
     class Meta:
