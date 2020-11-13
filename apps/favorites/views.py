@@ -23,16 +23,20 @@ class FavoriteProductCreateView(generics.CreateAPIView):
     ]
 
     def perform_create(self, serializer):
-        # fp = serializer.save()
         user = self.request.user
 
         product = serializer.validated_data.get('product')
 
         favorite = user.favorite.first()
+        if favorite is None:
+            favorite = models.Favorite.objects.create(user=user)
+
         queryset = favorite.related_favorites.filter(product__id=product.id)
         if queryset.exists():
-            raise ValidationError(
-                'Cannot add product to Favorites. It already exists there')
+            error = {
+                'message': 'Cannot add product to Favorites. It already exists there'
+            }
+            raise ValidationError(error)
         serializer.save()
 
 
