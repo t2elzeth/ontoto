@@ -21,9 +21,9 @@ class Cart(models.Model):
         verbose_name='Общая цена', default=0, decimal_places=2, max_digits=9)
     in_order = models.BooleanField(default=False)
 
-    def refresh_totals(self):
+    def count_totals(self):
         """
-        Refreshes `total products` and `total price`, 
+        Counts `total products` and `total price`, 
         but doesn't save the changes
         """
         self.total_products = sum(
@@ -31,12 +31,12 @@ class Cart(models.Model):
         self.total_price = sum(
             cp.final_price for cp in self.related_products.all())
 
-    def refresh_totals_and_save(self):
+    def count_totals_and_save(self):
         """
-        Refreshes `total products` and `total price`, 
+        Counts `total products` and `total price`, 
         and applies all the changes to DB
         """
-        self.refresh_totals()
+        self.count_totals()
         self.save()
 
     def __str__(self):
@@ -82,10 +82,9 @@ class CartProduct(models.Model):
         self.count_final_price()
         super().save(*args, **kwargs)
 
-        # Refresh and save
-        # `total products` and `total_price`
-        # in `Cart`
-        self.cart.refresh_totals_and_save()
+        # Count and save
+        # `total products` and `total_price` in `Cart`
+        self.cart.count_totals_and_save()
 
     def __str__(self):
         return "{} in {}".format(
