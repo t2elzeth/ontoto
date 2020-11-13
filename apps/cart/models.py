@@ -40,7 +40,10 @@ class Cart(models.Model):
         self.save()
 
     def __str__(self):
-        return "{}'s cart".format(self.user.username)
+        return "{}'s cart. In order: {}".format(
+            self.user.username,
+            self.in_order
+        )
 
 
 class CartProduct(models.Model):
@@ -70,10 +73,22 @@ class CartProduct(models.Model):
         self.save()
 
     def save(self, *args, **kwargs):
+        """
+        Overrided `save` method 
+        to do some additional things 
+        before saving the model's instance
+        """
+        # Count final price of CartProduct
         self.count_final_price()
         super().save(*args, **kwargs)
 
+        # Refresh and save
+        # `total products` and `total_price`
+        # in `Cart`
         self.cart.refresh_totals_and_save()
 
     def __str__(self):
-        return '{} => {}'.format(self.product.title, self.user.username)
+        return "{} in {}".format(
+            self.product.title,
+            self.cart
+        )
