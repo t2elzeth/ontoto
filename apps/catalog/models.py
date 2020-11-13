@@ -1,4 +1,5 @@
 import os
+import logging
 
 from django.db import models
 
@@ -54,7 +55,12 @@ class Product(models.Model):
     date_last_changed = models.DateField(auto_now=True)
 
     def count_favorites_number(self):
-        self.favorites_number += len(self.favorite_products.all())
+        logging.info(
+            'Counting favorites number: {}'.format(
+                self.favorite_products.all()
+            )
+        )
+        self.favorites_number = len(self.favorite_products.all())
 
     def count_favorites_number_and_save(self):
         self.count_favorites_number()

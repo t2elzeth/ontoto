@@ -45,3 +45,8 @@ class FavoriteProductDetailView(generics.RetrieveDestroyAPIView):
     permission_classes = [
         IsOwner
     ]
+
+    def perform_destroy(self, instance: models.FavoriteProduct):
+        product = instance.product
+        instance.delete()
+        product.count_favorites_number_and_save()
