@@ -1,8 +1,4 @@
-import logging
-
 from rest_framework import serializers
-
-from cart.permissions import IsOwner
 
 from . import models
 

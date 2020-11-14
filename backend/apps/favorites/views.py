@@ -1,11 +1,8 @@
-import logging
-
 from rest_framework import generics
-from rest_framework.exceptions import ValidationError
 from rest_framework import permissions
+from rest_framework.exceptions import ValidationError
 
 from cart.permissions import IsOwner
-
 from . import models, serializers
 
 

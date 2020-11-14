@@ -1,9 +1,6 @@
-import logging
-
 from rest_framework import serializers
 
 from . import models
-from catalog.models import Product
 
 
 class FavoriteProductListSerializer(serializers.ModelSerializer):
@@ -25,8 +22,6 @@ class FavoriteProductCreateSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
 
         user = request.user
-
-        product = validated_data.get('product')
         favorite, _ = user.favorites.get_or_create(user=user)
 
         validated_data['user'] = user
