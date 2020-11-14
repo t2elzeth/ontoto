@@ -23,8 +23,7 @@ class Order(models.Model):
 # TODO: Think on whether create `OrderProduct` model or not
 
 class Receiver(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255, blank=True, null=True)
+    full_name = models.CharField(max_length=255)
 
     email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=255)

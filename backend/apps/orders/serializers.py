@@ -12,11 +12,8 @@ class OrderListRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
 
 
 class OrderCreateSerializer(serializers.ModelSerializer):
-    first_name = serializers.ModelField(
-        model_field=models.Receiver()._meta.get_field('first_name')
-    )
-    last_name = serializers.ModelField(
-        model_field=models.Receiver()._meta.get_field('last_name')
+    full_name = serializers.ModelField(
+        model_field=models.Receiver()._meta.get_field('full_name')
     )
     email = serializers.ModelField(
         model_field=models.Receiver()._meta.get_field('email')
@@ -39,8 +36,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             'date_created',
 
             # Receiver fields
-            'first_name',
-            'last_name',
+            'full_name',
             'email',
             'phone',
             'address',
