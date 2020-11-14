@@ -1,9 +1,5 @@
-import logging
-
-from django.db.models import Prefetch
 from rest_framework import generics
 
-from cart.models import Cart
 from . import serializers, models
 
 

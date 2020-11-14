@@ -53,9 +53,7 @@ INSTALLED_APPS = [
     'djoser',
 
     # own
-    # 'auth_app',
     'catalog',
-
     'favorites',
     'cart',
     'orders'

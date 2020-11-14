@@ -1,5 +1,3 @@
-import logging
-
 from rest_framework import generics, permissions
 
 from . import models, serializers
@@ -23,4 +21,3 @@ class ProductCreateView(generics.CreateAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.ProductDetailSerializer
     queryset = models.Product.objects.all()
-
