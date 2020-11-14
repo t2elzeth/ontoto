@@ -48,9 +48,11 @@ INSTALLED_APPS = [
 
     # own
     # 'auth_app',
+    'catalog',
+
     'favorites',
     'cart',
-    'catalog',
+    'orders'
 ]
 
 

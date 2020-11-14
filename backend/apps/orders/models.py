@@ -1,6 +1,5 @@
-from django.db import models
-
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
 
@@ -10,6 +9,8 @@ class Order(models.Model):
         User, on_delete=models.CASCADE, related_name='orders')
     cart = models.ForeignKey(
         'cart.Cart', on_delete=models.CASCADE, related_name='orders')
+
+    is_gift = models.BooleanField(default=False)
     receiver = models.ForeignKey(
         'Receiver', on_delete=models.CASCADE, related_name='orders', blank=True, null=True)
 
