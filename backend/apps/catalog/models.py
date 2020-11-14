@@ -53,6 +53,14 @@ class Product(models.Model):
     date_created = models.DateField(auto_now=True)
     date_last_changed = models.DateField(auto_now=True)
 
+    def increment_orders_number_and_save(self):
+        self.orders_number += 1
+        self.save()
+
+    def decrement_orders_number_and_save(self):
+        self.orders_number -= 1
+        self.save()
+
     def count_favorites_number(self):
         logging.info(
             'Counting favorites number: {}'.format(

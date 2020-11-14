@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import logging
 import os
 import sys
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,6 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+
+logging.basicConfig(
+    filename=os.path.join(BASE_DIR, 'app.log'),
+    filemode='w',
+    level=logging.INFO
+)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 's=qsfq&n_%_&mxup)__aws(wnjgpj$41pc-=-82gle0e6yeyu@'

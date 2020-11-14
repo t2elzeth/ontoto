@@ -1,16 +1,8 @@
 import logging
-import os
 
-from django.conf import settings
 from rest_framework import generics, permissions
 
 from . import models, serializers
-
-logging.basicConfig(
-    filename=os.path.join(settings.BASE_DIR, 'app.log'),
-    filemode='w',
-    level=logging.INFO
-)
 
 
 class ProductsListView(generics.ListAPIView):
@@ -31,3 +23,4 @@ class ProductCreateView(generics.CreateAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.ProductDetailSerializer
     queryset = models.Product.objects.all()
+
