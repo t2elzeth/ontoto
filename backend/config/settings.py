@@ -112,19 +112,6 @@ REST_FRAMEWORK = {
     )
 }
 
-# AUTH_USER_MODEL = 'auth_app.Customer'
-
-
-# DJOSER = {
-#     'LOGIN_FIELD': 'email',
-#     'USER_CREATE_PASSWORD_RETYPE': True,
-#     'SERIALIZERS': {
-#         'user_create': 'auth_app.serializers.CustomUserCreateSerializer',
-#         'user': 'auth_app.serializers.CustomUserCreateSerializer',
-#     }
-# }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
