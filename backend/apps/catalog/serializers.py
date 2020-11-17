@@ -1,5 +1,3 @@
-import datetime
-
 from rest_framework import serializers
 
 from . import models
@@ -27,7 +25,7 @@ class ProductListSerializer(serializers.ModelSerializer):
         depth = 2
 
 
-class ProductDetailSerializer(serializers.ModelSerializer):
+class ProductRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Product
         fields = [
@@ -37,11 +35,3 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'orders_number', 'favorites_number', 'changes_number',
             'date_created', 'date_last_changed'
         ]
-
-    def update(self, instance, validated_data: dict):
-        if not instance.price == validated_data.get('price'):
-            validated_data['old_price'] = instance.price
-
-        validated_data['changes_number'] += 1
-        validated_data['date_last_changed'] = datetime.date.today()
-        return super().update(instance, validated_data)
