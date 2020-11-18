@@ -19,7 +19,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             'id', 'category', 'subcategory',
             'title', 'description',
             'price', 'old_price', 'available',
-            'orders_number', 'favorites_number', 'changes_number',
+            'orders_number', 'favorites_number',
             'date_created'
         ]
         depth = 2
@@ -32,6 +32,6 @@ class ProductRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
             'id', 'category', 'subcategory',
             'title', 'description',
             'price', 'old_price', 'available',
-            'orders_number', 'favorites_number', 'changes_number',
-            'date_created', 'date_last_changed'
+            'orders_number', 'favorites_number',
+            'date_created',
         ]

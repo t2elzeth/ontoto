@@ -1,5 +1,3 @@
-import datetime
-
 from rest_framework import generics, permissions
 
 from . import models, serializers
@@ -27,10 +25,9 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         instance = self.get_object()
 
-        if not instance.price == self.validated_data.get('price'):
-            self.validated_data['old_price'] = instance.price
-
-        self.validated_data['changes_number'] += 1
-        self.validated_data['date_last_changed'] = datetime.date.today()
+        if not instance.price == serializer.validated_data.get('price'):
+            serializer.validated_data.update({
+                'old_price': instance.price
+            })
 
         serializer.save()

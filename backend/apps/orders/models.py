@@ -5,10 +5,8 @@ User = get_user_model()
 
 
 class Order(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='orders')
-    cart = models.ForeignKey(
-        'cart.Cart', on_delete=models.CASCADE, related_name='orders')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    cart = models.ForeignKey('cart.Cart', on_delete=models.CASCADE, related_name='orders')
 
     is_gift = models.BooleanField(default=False)
     is_closed = models.BooleanField(default=False)
@@ -16,7 +14,7 @@ class Order(models.Model):
     date_created = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{}'s order. Gift: {}".format(self.user.username, self.is_gift)
+        return "{}'s order. Gift: {}".format(self.user.get_username(), self.is_gift)
 
     # TODO: How to implement `order_is_delivered` functionality
 

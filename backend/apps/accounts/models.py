@@ -91,6 +91,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         return data
 
+    def get_username(self):
+        return self.email
+
     def get_full_name(self):
         # The user is identified by their email address
         return self.email

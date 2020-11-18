@@ -20,7 +20,6 @@ class CartProductCreateView(generics.CreateAPIView):
         Create new CartProduct object instance by adding
         `user`, `cart` to `validated_data`
         """
-
         user = self.request.user
 
         cart, _ = user.carts.get_or_create(user=user, in_order=False)

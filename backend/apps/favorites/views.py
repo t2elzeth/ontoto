@@ -32,8 +32,10 @@ class FavoriteProductCreateView(generics.CreateAPIView):
             }
             raise ValidationError(error)
 
-        self.validated_data['user'] = user
-        self.validated_data['favorite'] = favorite
+        serializer.validated_data.update({
+            'user': user,
+            'favorite': favorite
+        })
 
         serializer.save()
 
@@ -48,4 +50,4 @@ class FavoriteProductDetailView(generics.RetrieveDestroyAPIView):
     def perform_destroy(self, instance: models.FavoriteProduct):
         product = instance.product
         instance.delete()
-        product.count_favorites_number_and_save()
+        product.count_favorites_number(save=True)

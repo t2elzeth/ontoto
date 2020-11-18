@@ -19,7 +19,7 @@ class OrderCreateView(generics.CreateAPIView):
         cart.save()
 
         for cp in cart.cart_products.all():
-            cp.product.increment_orders_number_and_save()
+            cp.product.increment_orders_number(save=True)
 
         is_gift = serializer.validated_data.get('is_gift')
 
@@ -55,6 +55,6 @@ class OrderRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
         cart = instance.cart
         for cp in cart.cart_products.all():
-            cp.product.decrement_orders_number_and_save()
+            cp.product.decrement_orders_number(save=True)
 
         instance.delete()

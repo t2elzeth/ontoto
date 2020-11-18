@@ -21,14 +21,12 @@ class Favorite(models.Model):
         self.save()
 
     def __str__(self):
-        return self.user.username
+        return self.user.get_username()
 
 
 class FavoriteProduct(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='favorite_products')
-    favorite = models.ForeignKey(
-        Favorite, on_delete=models.CASCADE, related_name='favorite_products')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorite_products')
+    favorite = models.ForeignKey(Favorite, on_delete=models.CASCADE, related_name='favorite_products')
 
     product = models.ForeignKey(
         'catalog.Product',
@@ -39,7 +37,7 @@ class FavoriteProduct(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.favorite.count_totals_and_save()
-        self.product.count_favorites_number_and_save()
+        self.product.count_favorites_number(save=True)
 
     def __str__(self):
-        return '{} => {}'.format(self.product.title, self.user.username)
+        return '{} => {}'.format(self.product.title, self.user.get_username())

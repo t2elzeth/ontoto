@@ -9,7 +9,7 @@ class Chat(models.Model):
     second_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chats')
 
     def __str__(self):
-        return "{} and {}".format(self.first_user.username, self.second_user.username)
+        return "{} and {}".format(self.first_user.get_username(), self.second_user.get_username())
 
 
 class Message(models.Model):
