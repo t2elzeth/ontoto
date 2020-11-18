@@ -4,21 +4,18 @@ from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, password, **kwargs):
+    def create_user(self, password, data):
         """
         Creates and saves a User with the given email and password.
         """
-        email = kwargs.get('email')
-
-        kwargs['email'] = self.normalize_email(email)
-
-        user = self.model(**kwargs)
+        data = self.model.prettify_data(data)
+        user = self.model(**data)
 
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, **data):
+    def create_superuser(self, data):
         """
         Creates and saves a superuser with the given email and password
         """
@@ -43,17 +40,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     phone = models.CharField(max_length=255)
     full_name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+
+    confirmed = models.BooleanField(default=False)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
-    last_login = models.DateTimeField(blank=True, null=True)
     date_joined = models.DateTimeField()
-    confirmed = models.BooleanField(default=False)
-
-    description = models.TextField(blank=True, null=True)
-    # notice the absence of a "Password field", that is built in.
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []  # Email & Password are required by default.
@@ -69,12 +64,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         so that it can be passed to the `User` model
         """
         current_date = timezone.now()
+        email = data.get('email')
 
         # Remove unnecessary data
         data.pop('password', None)
         data.pop('password2', None)
 
-        # Check if full_name is given
+        # Check if its for superuser
         if for_superuser:
             data.update({
                 'full_name': 'SuperUser. No full name specified',
@@ -83,9 +79,13 @@ class User(AbstractBaseUser, PermissionsMixin):
                 'is_staff': True
             })
 
+        # Prettify existing data
+        data.update({
+            'email': UserManager.normalize_email(email)
+        })
+
         # Add required data
         data.update({
-            'last_login': current_date,
             'date_joined': current_date
         })
 

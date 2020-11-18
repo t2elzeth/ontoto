@@ -14,7 +14,8 @@ class UserAdmin(BaseUserAdmin):
         'is_staff',
     )
     readonly_fields = (
-        'id', 'date_joined', 'last_login'
+        'id',
+        'date_joined',
     )
 
     fieldsets = (
@@ -22,7 +23,7 @@ class UserAdmin(BaseUserAdmin):
             'fields': (
                 'id',
                 'email', 'phone', 'description',
-                'last_login', 'date_joined',
+                'date_joined',
                 'confirmed',
                 'is_active', 'is_superuser', 'is_staff',
             )

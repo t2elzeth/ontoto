@@ -21,6 +21,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = [
+            'id',
             'full_name',
             'email',
             'phone',
@@ -33,6 +34,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
                 'write_only': True,
                 'style': {'input_type': 'password'}
             },
+            'id': {
+                'read_only': True
+            }
         }
 
     def validate(self, data: dict):
@@ -47,15 +51,5 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data: dict):
         password = validated_data.get('password')
-
-        prettified_data = self.prettify_validated_data(validated_data)
-
-        user = models.User.objects.create_user(
-            password=password,
-            **prettified_data
-        )
+        user = self.Meta.model.objects.create_user(password, validated_data)
         return user
-
-    @staticmethod
-    def prettify_validated_data(data: dict):
-        return models.User.prettify_data(data)
