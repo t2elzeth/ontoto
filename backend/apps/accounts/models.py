@@ -61,7 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []  # Email & Password are required by default.
 
     def update_last_login(self):
-        self.last_login = datetime.datetime.now()
+        self.last_login = timezone.now()
         self.save()
 
     @staticmethod
