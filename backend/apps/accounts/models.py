@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -23,16 +24,11 @@ class UserManager(BaseUserManager):
         """
         Creates and saves a superuser with the given email and password
         """
-        email = data.get('email')
         password = data.get('password')
 
-        current_date = datetime.datetime.now()
+        data = self.model.prettify_data(data, for_superuser=True)
 
-        user = self.model(email=email, phone='',
-                          full_name='',
-                          is_superuser=True, is_staff=True,
-                          last_login=current_date,
-                          date_joined=current_date)
+        user = self.model(**data)
 
         user.set_password(password)
         user.save()
@@ -67,6 +63,35 @@ class User(AbstractBaseUser, PermissionsMixin):
     def update_last_login(self):
         self.last_login = datetime.datetime.now()
         self.save()
+
+    @staticmethod
+    def prettify_data(data, for_superuser=False):
+        """
+        Filters the data in `validated_data`
+        so that it can be passed to the `User` model
+        """
+        current_date = timezone.now()
+
+        # Remove unnecessary data
+        data.pop('password', None)
+        data.pop('password2', None)
+
+        # Check if full_name is given
+        if for_superuser:
+            data.update({
+                'full_name': 'SuperUser. No full name specified',
+                'phone': '',
+                'is_superuser': True,
+                'is_staff': True
+            })
+
+        # Add required data
+        data.update({
+            'last_login': current_date,
+            'date_joined': current_date
+        })
+
+        return data
 
     def get_full_name(self):
         # The user is identified by their email address

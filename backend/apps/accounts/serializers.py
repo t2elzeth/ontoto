@@ -15,10 +15,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserCreateSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(
-        style={
-            'input_type': 'password'
-        },
-        write_only=True
+        style={'input_type': 'password'},
+        write_only=True,
+        required=True
     )
 
     class Meta:
@@ -34,41 +33,31 @@ class UserCreateSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {
                 'write_only': True,
-                'style': {
-                    'input_type': 'password'
-                }
-            }
+                'style': {'input_type': 'password'}
+            },
         }
 
-    def create(self, validated_data):
-        password = validated_data.get('password')
-        password2 = validated_data.get('password2')
+    def validate(self, data: dict):
+        password = data.get('password')
+        password2 = data.get('password2')
 
         if password != password2:
             raise serializers.ValidationError({
                 'password': "Passwords didn't match"
             })
+        return data
 
-        self.prettify_validated_data()
+    def create(self, validated_data: dict):
+        password = validated_data.get('password')
+
+        prettified_data = self.prettify_validated_data(validated_data)
 
         user = models.User.objects.create_user(
             password=password,
-            **self.validated_data
+            **prettified_data
         )
         return user
 
-    def prettify_validated_data(self):
-        """
-        Filters the data in `validated_data`
-        so that it can be passed to the `User` model
-        """
-        current_date = datetime.datetime.now()
-
-        # Remove unnecessary data
-        self.validated_data.pop('password')
-        self.validated_data.pop('password2')
-
-        # Add required, but not included in request data
-        self.validated_data['last_login'] = current_date
-        self.validated_data['date_joined'] = current_date
-        return self.validated_data
+    @staticmethod
+    def prettify_validated_data(data: dict):
+        return models.User.prettify_data(data)
