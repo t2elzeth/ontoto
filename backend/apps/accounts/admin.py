@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.models import User as BaseUser
+
 from . import models
 
 
@@ -14,7 +14,7 @@ class UserAdmin(BaseUserAdmin):
         'is_staff',
     )
     readonly_fields = (
-        'id', 'date_joined',
+        'id', 'date_joined', 'last_login'
     )
 
     fieldsets = (

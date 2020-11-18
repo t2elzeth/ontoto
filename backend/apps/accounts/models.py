@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
@@ -8,30 +10,31 @@ class UserManager(BaseUserManager):
         Creates and saves a User with the given email and password.
         """
         email = kwargs.get('email')
-        if not email:
-            raise ValueError('Users must have an email address')
 
         kwargs['email'] = self.normalize_email(email)
 
-        user = self.model(
-            **kwargs
-        )
+        user = self.model(**kwargs)
 
         user.set_password(password)
         user.save()
         return user
 
     def create_superuser(self, **data):
+        """
+        Creates and saves a superuser with the given email and password
+        """
         email = data.get('email')
         password = data.get('password')
-        user = self.model(
-            email=email,
-            phone=email
-        )
+
+        current_date = datetime.datetime.now()
+
+        user = self.model(email=email, phone='',
+                          full_name='',
+                          is_superuser=True, is_staff=True,
+                          last_login=current_date,
+                          date_joined=current_date)
 
         user.set_password(password)
-        user.is_superuser = True
-        user.is_staff = True
         user.save()
         return user
 
@@ -45,13 +48,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True,
     )
     phone = models.CharField(max_length=255)
+    full_name = models.CharField(max_length=255)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
-    last_login = models.DateTimeField()
-    date_joined = models.DateTimeField(auto_now=True)
+    last_login = models.DateTimeField(blank=True, null=True)
+    date_joined = models.DateTimeField()
     confirmed = models.BooleanField(default=False)
 
     description = models.TextField(blank=True, null=True)
@@ -59,6 +63,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []  # Email & Password are required by default.
+
+    def update_last_login(self):
+        self.last_login = datetime.datetime.now()
+        self.save()
 
     def get_full_name(self):
         # The user is identified by their email address
