@@ -1,14 +1,14 @@
 class ProductUtils:
     __ALLOWED_METHODS = ('inc', 'dec')
 
-    @staticmethod
-    def update_orders_number(self, operation=""):
-        if operation not in self.__ALLOWED_METHODS:
-            raise ValueError('Method must be one of {}'.format(' '.join(self.__ALLOWED_METHODS)))
+    @classmethod
+    def update_orders_number(cls, instance, operation=""):
+        if operation not in cls.__ALLOWED_METHODS:
+            raise ValueError('Method must be one of {}'.format(' '.join(cls.__ALLOWED_METHODS)))
 
         method = {
-            'inc': lambda: self.qty + 1,
-            'dec': lambda: self.qty - 1,
+            'inc': lambda: instance.qty + 1,
+            'dec': lambda: instance.qty - 1,
         }.get(operation)
 
-        self.qty = method()
+        instance.qty = method()
