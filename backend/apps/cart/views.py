@@ -1,4 +1,5 @@
-from rest_framework import generics, permissions
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 from . import serializers, models
 from .permissions import IsOwner, CartIsNotInOrder
@@ -12,15 +13,12 @@ class CartProductListView(generics.ListAPIView):
 class CartProductCreateView(generics.CreateAPIView):
     serializer_class = serializers.CartProductCreateRetrieveDestroySerializer
     permission_classes = [
-        permissions.IsAuthenticated
+        IsAuthenticated
     ]
 
     def perform_create(self, serializer):
-        """
-        Create new CartProduct object instance by adding
-        `user`, `cart` to `validated_data`
-        """
-        user = self.request.user
+        """Create new CartProduct object instance"""
+        user = self.get_user()
 
         cart, _ = user.carts.get_or_create(user=user, in_order=False)
 
@@ -36,6 +34,9 @@ class CartProductCreateView(generics.CreateAPIView):
         cp.qty += qty
         cp.save()
         return cp
+
+    def get_user(self):
+        return self.request.user
 
 
 class CartProductDetailView(generics.RetrieveDestroyAPIView):

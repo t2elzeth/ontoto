@@ -59,11 +59,8 @@ class CartProduct(models.Model):
             self.save()
 
     def save(self, *args, **kwargs):
-        """
-        Overrided `save` method 
-        to do some additional things 
-        before saving the model's instance
-        """
+        """Custom save method"""
+
         # Count final price of CartProduct
         self.count_final_price()
         super().save(*args, **kwargs)

@@ -6,9 +6,7 @@ from . import models
 class CartProductCreateRetrieveDestroySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CartProduct
-        fields = [
-            'product', 'qty'
-        ]
+        fields = ['product', 'qty']
 
 
 class CartProductListSerializer(serializers.ModelSerializer):
