@@ -51,11 +51,6 @@ class Product(models.Model):
             self.save()
 
     def count_favorites_number(self, save=False):
-        logging.info(
-            'Counting favorites number: {}'.format(
-                self.favorite_products.all()
-            )
-        )
         self.favorites_number = len(self.favorite_products.all())
 
         if save:
