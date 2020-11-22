@@ -61,6 +61,9 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
+    """Model to store product's images"""
+
+    # TODO: Use this model
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_images')
     image = models.ImageField(blank=True, null=True, upload_to='media/images/')
 
