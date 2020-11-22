@@ -15,7 +15,6 @@ import os
 import sys
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -72,7 +71,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -95,7 +93,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -117,8 +114,6 @@ DATABASES = {
     }
 }
 
-
-
 AUTH_USER_MODEL = 'accounts.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -138,9 +133,9 @@ DJOSER = {
     # 'ACTIVATION_URL': '#/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
-        'user': 'accounts.serializers.UserSerializer',
+        'user': 'accounts.serializers.UserDetailSerializer',
         'user_create': 'accounts.serializers.UserCreateSerializer',
-        'current_user': 'accounts.serializers.UserSerializer',
+        'current_user': 'accounts.serializers.UserDetailSerializer',
     }
 }
 

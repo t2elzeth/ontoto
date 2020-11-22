@@ -6,13 +6,16 @@ from . import models
 
 class UserAdmin(BaseUserAdmin):
     ordering = ('is_staff',)
+
     list_display = (
-        'email', 'confirmed',
+        'email', 'is_confirmed',
         'is_active', 'is_superuser', 'is_staff'
     )
+
     list_filter = (
         'is_staff',
     )
+
     readonly_fields = (
         'id',
         'date_joined',
@@ -24,7 +27,7 @@ class UserAdmin(BaseUserAdmin):
                 'id',
                 'email', 'phone', 'description',
                 'date_joined',
-                'confirmed',
+                'is_confirmed',
                 'is_active', 'is_superuser', 'is_staff',
             )
         }),
