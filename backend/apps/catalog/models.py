@@ -44,8 +44,6 @@ class Product(models.Model):
 
     date_created = models.DateField(auto_now=True)
 
-    __ALLOWED_METHODS = ('inc', 'dec')
-
     def update_orders_number(self, operation="", save=False):
         ProductUtils.update_orders_number(self, operation)
 
