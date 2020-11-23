@@ -17,7 +17,7 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
     text = models.TextField()
 
-    date_sent = models.TimeField(default=timezone.now())
+    date_sent = models.TimeField(default=timezone.now)
 
     def __str__(self):
         return "{} in {}".format(self.text[:10], self.chat)

@@ -12,7 +12,7 @@ class Order(models.Model):
     is_gift = models.BooleanField(default=False)
     is_closed = models.BooleanField(default=False)
 
-    date_created = models.DateTimeField(default=timezone.now())
+    date_created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return "{}'s order. Gift: {}".format(self.user.get_username(), self.is_gift)
