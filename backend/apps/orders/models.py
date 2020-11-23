@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -11,7 +12,7 @@ class Order(models.Model):
     is_gift = models.BooleanField(default=False)
     is_closed = models.BooleanField(default=False)
 
-    date_created = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(default=timezone.now())
 
     def __str__(self):
         return "{}'s order. Gift: {}".format(self.user.get_username(), self.is_gift)

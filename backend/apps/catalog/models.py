@@ -3,6 +3,7 @@ import os
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -40,7 +41,7 @@ class Product(models.Model):
     orders_number = models.PositiveIntegerField(verbose_name='Кол-во покупок', default=0)
     favorites_number = models.PositiveIntegerField(verbose_name='Кол-во избранных', default=0)
 
-    date_created = models.DateField(auto_now=True)
+    date_created = models.DateField(default=timezone.now())
 
     def update_orders_number(self, save=False):
         self.orders_number += 1

@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -49,7 +50,7 @@ class CartProduct(models.Model):
     qty = models.PositiveIntegerField('Количество', default=0)
     final_price = models.DecimalField(decimal_places=2, max_digits=9, verbose_name='Общая цена', default=0)
 
-    date_added = models.DateTimeField(auto_now=True)
+    date_added = models.DateTimeField(default=timezone.now())
 
     def count_final_price(self, save=False):
         """Counts final price, but doesn't save the changes"""
