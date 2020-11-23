@@ -19,7 +19,7 @@ class FavoriteProductCreateView(generics.CreateAPIView):
     ]
 
     def perform_create(self, serializer):
-        user = self.request.user
+        user = self.get_user()
 
         product = serializer.validated_data.get('product')
 
@@ -36,8 +36,10 @@ class FavoriteProductCreateView(generics.CreateAPIView):
             'user': user,
             'favorite': favorite
         })
-
         serializer.save()
+
+    def get_user(self):
+        return self.request.user
 
 
 class FavoriteProductDetailView(generics.RetrieveDestroyAPIView):

@@ -20,7 +20,6 @@ class Order(models.Model):
 
 
 # TODO: Think on whether create `OrderProduct` model or not
-
 class Receiver(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='receivers')
     full_name = models.CharField(max_length=255)

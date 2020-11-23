@@ -10,15 +10,12 @@ class Favorite(models.Model):
         on_delete=models.CASCADE,
         related_name='favorites'
     )
-
     total_products = models.PositiveIntegerField('Всего продуктов', default=0)
 
-    def count_totals(self):
+    def count_totals(self, save=False):
         self.total_products = len(self.favorite_products.all())
-
-    def count_totals_and_save(self):
-        self.count_totals()
-        self.save()
+        if save:
+            self.save()
 
     def __str__(self):
         return self.user.get_username()
@@ -36,7 +33,7 @@ class FavoriteProduct(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.favorite.count_totals_and_save()
+        self.favorite.count_totals(save=True)
         self.product.count_favorites_number(save=True)
 
     def __str__(self):

@@ -12,14 +12,14 @@ class OrderCreateView(generics.CreateAPIView):
     serializer_class = serializers.OrderCreateSerializer
 
     def perform_create(self, serializer):
-        user = self.request.user
+        user = self.get_user()
 
         cart = serializer.validated_data.get('cart')
         cart.in_order = True
         cart.save()
 
         for cp in cart.cart_products.all():
-            cp.product.update_orders_number(operation='inc', save=True)
+            cp.product.update_orders_number(save=True)
 
         is_gift = serializer.validated_data.get('is_gift')
 
@@ -40,8 +40,10 @@ class OrderCreateView(generics.CreateAPIView):
                 address=address,
                 postal_code=postal_code,
             )
-
         return order
+
+    def get_user(self):
+        return self.request.user
 
 
 class OrderRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
@@ -52,9 +54,5 @@ class OrderRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
         receivers = instance.receivers.all()
         for receiver in receivers:
             receiver.delete()
-
-        cart = instance.cart
-        for cp in cart.cart_products.all():
-            cp.product.update_orders_number(operation='dec', save=True)
 
         instance.delete()

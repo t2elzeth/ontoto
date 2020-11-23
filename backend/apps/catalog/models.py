@@ -4,8 +4,6 @@ import os
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from .utils import ProductUtils
-
 User = get_user_model()
 
 
@@ -44,15 +42,13 @@ class Product(models.Model):
 
     date_created = models.DateField(auto_now=True)
 
-    def update_orders_number(self, operation="", save=False):
-        ProductUtils.update_orders_number(self, operation)
-
+    def update_orders_number(self, save=False):
+        self.orders_number += 1
         if save:
             self.save()
 
     def count_favorites_number(self, save=False):
         self.favorites_number = len(self.favorite_products.all())
-
         if save:
             self.save()
 
