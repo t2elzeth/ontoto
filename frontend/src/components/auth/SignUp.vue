@@ -33,31 +33,27 @@
 
       <input type="submit" value="Sign up" />
     </form>
-    {{ userData }}
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
-import { ref } from "vue";
+// import { ref } from "vue";
 
 const urls = {
-  signUpUrl: "http://127.0.0.1:8001/api/auth/users/",
+  signUpUrl: "http://127.0.0.1:8001/api/auth/users/"
 };
 
 export default {
   name: "SignUp",
   setup() {
-    let userData = ref({});
-
     const formData = {
       email: "",
       full_name: "",
       phone: "",
       password: "",
       password2: "",
-      description: "",
+      description: ""
     };
 
     function submitForm() {
@@ -65,25 +61,23 @@ export default {
 
       axios
         .post(urls.signUpUrl, formData)
-        .then((res) => {
-          userData.value = res.data;
-          console.log(userData.value);
+        .then(res => {
+          console.log(res.data);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
 
     return {
       formData,
-      userData,
-      submitForm,
+      submitForm
     };
-  },
+  }
 };
 </script>
 
-<style>
+<style scoped>
 .app {
   display: flex;
   justify-content: center;
