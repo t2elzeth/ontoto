@@ -1,7 +1,6 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../../assets/logo.png"/>
-    <SignUp msg="Welcome to Your Vue.js App"/>
+  <div class="app">
+    <SignUp />
   </div>
 </template>
 
@@ -9,9 +8,9 @@
 import SignUp from "@/components/auth/SignUp.vue";
 
 export default {
-  name: "SignUp",
+  name: "SignUpView",
   components: {
-    SignUp
+    SignUp,
   },
 };
 </script>

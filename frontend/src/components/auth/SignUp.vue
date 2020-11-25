@@ -3,35 +3,35 @@
     <form action="" class="form" @submit.prevent="submitForm">
       <div class="form-field">
         <label for="id_email">Почта</label>
-        <input type="text" id="id_email" v-model="formData.email">
+        <input type="text" id="id_email" v-model="formData.email" />
       </div>
 
       <div class="form-field">
         <label for="id_full_name">Полное имя</label>
-        <input type="text" id="id_full_name" v-model="formData.full_name">
+        <input type="text" id="id_full_name" v-model="formData.full_name" />
       </div>
 
       <div class="form-field">
         <label for="id_phone">Номер телефона</label>
-        <input type="text" id="id_phone" v-model="formData.phone">
+        <input type="text" id="id_phone" v-model="formData.phone" />
       </div>
 
       <div class="form-field">
         <label for="id_password">Пароль</label>
-        <input type="password" id="id_password" v-model="formData.password">
+        <input type="password" id="id_password" v-model="formData.password" />
       </div>
 
       <div class="form-field">
         <label for="id_password2">Повторите пароль</label>
-        <input type="password" id="id_password2" v-model="formData.password2">
+        <input type="password" id="id_password2" v-model="formData.password2" />
       </div>
 
       <div class="form-field">
         <label for="id_description">Описание для вашего профиля</label>
-        <input type="text" id="id_description" v-model="formData.description">
+        <input type="text" id="id_description" v-model="formData.description" />
       </div>
 
-      <input type="submit" value="Sign up">
+      <input type="submit" value="Sign up" />
     </form>
     {{ userData }}
   </div>
@@ -39,44 +39,49 @@
 
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import { ref } from "vue";
 
 const urls = {
-  signUpUrl: 'http://127.0.0.1:8001/api/auth/users/',
-}
+  signUpUrl: "http://127.0.0.1:8001/api/auth/users/",
+};
 
 export default {
-  name: 'SignUp',
+  name: "SignUp",
   setup() {
-    const msg = 'HelloWorld!'
-    let userData = {}
+    let userData = ref({});
 
     const formData = {
-      email: '',
-      full_name: '',
-      phone: '',
-      password: '',
-      password2: '',
-      description: '',
-    }
+      email: "",
+      full_name: "",
+      phone: "",
+      password: "",
+      password2: "",
+      description: "",
+    };
 
     function submitForm() {
-      console.log('FORM HAS BEEN SUBMITTED')
+      console.log("FORM HAS BEEN SUBMITTED");
 
-      axios.post(urls.signUpUrl, formData)
-          .then((res) => {
-            userData = res.data
-            console.log(userData)
-          }).catch((err) => {
-        console.log(err)
-      })
+      axios
+        .post(urls.signUpUrl, formData)
+        .then((res) => {
+          userData.value = res.data;
+          console.log(userData.value);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
 
     return {
-      msg, formData, userData, submitForm
-    }
-  }
-}
+      msg,
+      formData,
+      userData,
+      submitForm,
+    };
+  },
+};
 </script>
 
 <style>
