@@ -77,19 +77,19 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .app {
   display: flex;
   justify-content: center;
   width: 100%;
-}
 
-.form {
-  width: 30%;
-}
+  .form {
+    width: 30%;
 
-.form-field {
-  display: flex;
-  justify-content: space-between;
+    &-field {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 }
 </style>
