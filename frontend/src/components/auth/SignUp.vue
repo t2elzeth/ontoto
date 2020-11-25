@@ -75,7 +75,6 @@ export default {
     }
 
     return {
-      msg,
       formData,
       userData,
       submitForm,
