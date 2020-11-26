@@ -1,10 +1,13 @@
-import {createApp} from "vue";
+import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { VuelidatePlugin } from '@vuelidate/core';
+import { VuelidatePlugin } from "@vuelidate/core";
 
-const app = createApp(App)
+// import axios from "axios";
+// import VueAxios from "vue-axios";
 
-app.use(router)
-app.use(VuelidatePlugin)
+const app = createApp(App);
+
+app.use(router);
+app.use(VuelidatePlugin);
 app.mount("#app");
