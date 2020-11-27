@@ -19,7 +19,7 @@ body {
     left: 0;
     background-color: #111; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
+    padding-top: 50px;
 
     /*display: flex;*/
     /*flex-direction: column;*/
@@ -57,17 +57,17 @@ body {
     }
 }
 
-
 .topnav {
     background-color: #333;
     overflow: hidden;
     margin-left: 160px;
     display: flex;
     justify-content: space-between;
-}
+    align-items: center;
+    height: 50px;
 
-.auth {
-    align-self: center;
+    position: sticky;
+    top: 0;
 }
 
 /* Style the links inside the navigation bar */
