@@ -1,39 +1,13 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 
-
-class UserManager(BaseUserManager):
-    """Manager for custom User model"""
-    def create_user(self, password, data):
-        """Creates and saves a User with the given data"""
-        data = self.model.prettify_data(data)
-        user = self.model(**data)
-
-        user.set_password(password)
-        user.save()
-        return user
-
-    def create_superuser(self, **data):
-        """
-        Creates and saves a superuser with the given email and password
-
-        TODO: What is difference between superusers and staff users?
-        """
-        password = data.get('password')
-
-        data = self.model.prettify_data(data, for_superuser=True)
-
-        user = self.model(**data)
-
-        user.set_password(password)
-        user.save()
-        return user
+from . import managers
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom User model for authentication"""
-    objects = UserManager()
+    objects = managers.UserManager()
 
     email = models.EmailField(
         verbose_name='email address',
@@ -61,7 +35,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         Filters the data in `validated_data`
         so that it can be passed to the `User` model
         """
-        current_date = timezone.now()
         email = data.get('email')
 
         # Remove unnecessary data
@@ -85,7 +58,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         # Prettify existing data
         data.update({
-            'email': UserManager.normalize_email(email)
+            'email': managers.UserManager.normalize_email(email)
         })
         return data
 
