@@ -26,11 +26,9 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
 
         if not instance.price == serializer.validated_data.get('price'):
-            serializer.validated_data.update({
-                'old_price': instance.price
-            })
+            instance.set_old_price(save=True)
 
-        serializer.save()
+        return serializer.save()
 
 
 class CategoryListView(generics.ListAPIView):

@@ -38,6 +38,11 @@ class Product(models.Model):
         if save:
             self.save()
 
+    def set_old_price(self, save=True):
+        self.old_price = self.price
+        if save:
+            self.save()
+
     def count_favorites_number(self, save=False):
         self.favorites_number = len(self.favorite_products.all())
         if save:
