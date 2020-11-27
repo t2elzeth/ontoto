@@ -9,16 +9,7 @@ User = get_user_model()
 
 
 class Category(models.Model):
-    title = models.CharField(verbose_name='Название', max_length=255)
-    slug = models.SlugField()
-
-    def __str__(self):
-        return '{}, ({})'.format(self.title, self.slug)
-
-
-class Subcategory(models.Model):
-    parent = models.ForeignKey(Category, on_delete=models.CASCADE,
-                               related_name='subcategories', blank=True, null=True)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='subcategories', blank=True, null=True)
     title = models.CharField(verbose_name='Название', max_length=255)
     slug = models.SlugField()
 
@@ -29,7 +20,6 @@ class Subcategory(models.Model):
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
-    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, null=True, related_name='products')
 
     title = models.CharField(verbose_name='Название', max_length=255)
     description = models.TextField(verbose_name='Описание', null=True, blank=True)

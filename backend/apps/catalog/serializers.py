@@ -7,16 +7,15 @@ class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Product
         fields = [
-            'category', 'subcategory',
-            'title', 'description', 'price',
+            'category', 'title', 'description', 'price',
         ]
 
 
-class ProductListSerializer(serializers.ModelSerializer):
+class ProductListRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Product
         fields = [
-            'id', 'category', 'subcategory',
+            'id', 'category',
             'title', 'description',
             'price', 'old_price', 'available',
             'orders_number', 'favorites_number',
@@ -24,14 +23,29 @@ class ProductListSerializer(serializers.ModelSerializer):
         ]
         depth = 2
 
+        extra_kwargs = {
+            'id': {
+                'read_only': True,
+            },
+            'old_price': {
+                'read_only': True,
+            },
+            'orders_number': {
+                'read_only': True,
+            },
+            'favorites_number': {
+                'read_only': True,
+            },
+            'date_created': {
+                'read_only': True,
+            },
+        }
 
-class ProductRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
+
+class CatalogListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Product
+        model = models.Category
         fields = [
-            'id', 'category', 'subcategory',
-            'title', 'description',
-            'price', 'old_price', 'available',
-            'orders_number', 'favorites_number',
-            'date_created',
+            'id', 'parent', 'title', 'slug'
         ]
+        depth = 2

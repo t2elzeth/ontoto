@@ -4,7 +4,7 @@ from . import models, serializers
 
 
 class ProductsListView(generics.ListAPIView):
-    serializer_class = serializers.ProductListSerializer
+    serializer_class = serializers.ProductListRetrieveUpdateDestroySerializer
     queryset = models.Product.objects.all()
 
 
@@ -19,7 +19,7 @@ class ProductCreateView(generics.CreateAPIView):
 
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = serializers.ProductRetrieveUpdateDestroySerializer
+    serializer_class = serializers.ProductListRetrieveUpdateDestroySerializer
     queryset = models.Product.objects.all()
 
     def perform_update(self, serializer):
@@ -31,3 +31,8 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
             })
 
         serializer.save()
+
+
+class CategoryListView(generics.ListAPIView):
+    serializer_class = serializers.CatalogListSerializer
+    queryset = models.Category.objects.all()
