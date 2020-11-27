@@ -38,7 +38,7 @@ class Product(models.Model):
         if save:
             self.save()
 
-    def set_old_price(self, save=True):
+    def set_old_price(self, save=False):
         self.old_price = self.price
         if save:
             self.save()
