@@ -1,5 +1,7 @@
 <template>
-  <div class="app">
+  <Navbar />
+  <Sidebar />
+  <div class="main">
     <form action="" class="form" @submit.prevent="login">
       <div class="form-field">
         <label for="id_email">Почта</label>
@@ -22,11 +24,19 @@
 </template>
 
 <script>
+import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
+
 import axios from "axios";
+
 import { urls, auth } from "@/utils/api";
 
 export default {
   name: "Login",
+  components: {
+    Navbar,
+    Sidebar
+  },
   setup() {
     const loginFormData = auth.formData.login;
 
@@ -76,5 +86,13 @@ export default {
       justify-content: space-between;
     }
   }
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidebar */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>

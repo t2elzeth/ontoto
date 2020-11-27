@@ -1,4 +1,6 @@
 <template>
+  <Navbar />
+  <Sidebar />
   <div class="app">
     <form action="" class="form" @submit.prevent="signUp">
       <div class="form-field">
@@ -53,12 +55,19 @@
 </template>
 
 <script>
+import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
+
 import axios from "axios";
 // import { ref } from "vue";
 import { urls, auth } from "@/utils/api";
 
 export default {
   name: "SignUp",
+  components: {
+    Navbar,
+    Sidebar
+  },
   setup() {
     const signUpFormData = auth.formData.signUp;
 
