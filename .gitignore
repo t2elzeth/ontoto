@@ -9,7 +9,7 @@ __pycache__/
 *.so
 
 node_modules/
-.idea/
+*/.idea/
 
 # Distribution / packaging
 .Python
