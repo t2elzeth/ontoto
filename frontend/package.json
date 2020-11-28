@@ -12,11 +12,14 @@
     "@vuelidate/validators": "^2.0.0-alpha.5",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "joi": "^17.3.0",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.0",
+    "urix": "^0.1.0",
     "url-join": "^4.0.1",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "vue-simple-alert": "^1.1.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
