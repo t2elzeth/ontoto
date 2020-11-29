@@ -1,14 +1,14 @@
 <template>
   <div class="form-field">
-    <FieldLabel :for="field.id" :text="field.labelText" :v$field="v$" />
+    <FieldLabel :for="id" :text="labelText" :v$field="v$" />
     <InputField
-      :type="field.type"
-      :placeholder="field.placeholder"
+      :type="inputType"
+      :placeholder="placeholder"
       :v$field="v$"
-      :id="field.id"
+      :id="id"
     />
 
-    <ValidationMessages :v$field="v$" :validators="field.validators" />
+    <ValidationMessages :v$field="v$" :validators="validators" />
   </div>
 </template>
 
@@ -25,14 +25,12 @@ export default {
     ValidationMessages
   },
   props: {
-    field: {
-      type: Object,
-      required: true
-    },
-    v$field: {
-      type: Object,
-      required: true
-    }
+    v$field: Object,
+    id: String,
+    placeholder: String,
+    labelText: String,
+    validators: Array,
+    inputType: String
   },
   setup(props) {
     return {

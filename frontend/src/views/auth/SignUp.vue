@@ -8,14 +8,63 @@
         <p>Please fill in this form to create an account.</p>
         <hr />
 
-        <FormField :field="signUpFormData.email" :v$field="v$.email" />
-        <FormField :field="signUpFormData.full_name" :v$field="v$.full_name" />
-        <FormField :field="signUpFormData.phone" :v$field="v$.phone" />
-        <FormField :field="signUpFormData.password" :v$field="v$.password" />
-        <FormField :field="signUpFormData.password2" :v$field="v$.password2" />
         <FormField
-          :field="signUpFormData.description"
+          :v$field="v$.email"
+          id="email"
+          placeholder="Enter email"
+          label-text="Email"
+          :validators="[getValidator.required('Email'), getValidator.email()]"
+        />
+        <FormField
+          :v$field="v$.full_name"
+          id="full_name"
+          placeholder="Enter full name"
+          label-text="Full name"
+          :validators="[
+            getValidator.required('Full name'),
+            getValidator.minLength('Full name', 'full_name'),
+            getValidator.alpha('alpha')
+          ]"
+        />
+        <FormField
+          :v$field="v$.phone"
+          id="phone"
+          placeholder="Enter phone number"
+          label-text="Phone number"
+          :validators="[
+            getValidator.required('Phone number'),
+            getValidator.minLength('Phone number', 'phone')
+          ]"
+        />
+        <FormField
+          :v$field="v$.password"
+          id="password"
+          placeholder="Enter password"
+          label-text="Password"
+          input-type="password"
+          :validators="[
+            getValidator.required('Password'),
+            getValidator.minLength('Password', 'password')
+          ]"
+        />
+        <FormField
+          :v$field="v$.password2"
+          id="password2"
+          placeholder="Repeat your password"
+          label-text="Repeat password"
+          input-type="password"
+          :validators="[getValidator.sameAs('passwords')]"
+        />
+        <FormField
           :v$field="v$.description"
+          id="description"
+          placeholder="Enter description"
+          label-text="Description"
+          :validators="[
+            getValidator.required('Description'),
+            getValidator.maxLength('Description', 'description'),
+            getValidator.minLength('Description', 'description')
+          ]"
         />
 
         <button type="submit" class="register-btn">Sign Up</button>
@@ -37,21 +86,20 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import FormField from "@/components/FormField";
 
-import { ref } from "vue";
 // import axios from "axios";
 import {
   email,
-  minLength,
   required,
   sameAs,
   maxLength,
+  minLength,
   alpha
-} from "@vuelidate/validators";
+} from "@vuelidate/validators/dist/raw.esm";
 import { useVuelidate } from "@vuelidate/core";
 
 // import { urls } from "@/utils/api";
 import { success, error } from "@/utils/notifications";
-import { validators, getStates } from "@/utils/forms";
+import { validators, getValidator, formData } from "@/utils/forms";
 
 export default {
   name: "SignUp",
@@ -61,114 +109,7 @@ export default {
     FormField
   },
   setup() {
-    const signUpFormData = {
-      email: {
-        data: ref(""),
-        id: "email",
-        placeholder: "Enter email",
-        labelText: "Email",
-        validators: [
-          {
-            name: "required",
-            message: "Email cannot be blank"
-          },
-          {
-            name: "email",
-            message: "Enter a valid email"
-          }
-        ]
-      },
-      full_name: {
-        data: ref(""),
-        id: "full_name",
-        placeholder: "Enter Full name",
-        labelText: "Full name",
-        validators: [
-          {
-            name: "required",
-            message: "Full name cannot be blank"
-          },
-          {
-            name: "minLength",
-            message: `Full name must be at least ${validators.minLength.fullname} characters long`
-          },
-          {
-            name: "alpha",
-            message: `Full name must contain only letters`
-          }
-        ]
-      },
-      phone: {
-        data: ref(""),
-        id: "phone",
-        placeholder: "Enter Phone number",
-        labelText: "Phone number",
-        validators: [
-          {
-            name: "required",
-            message: "Phone number cannot be blank"
-          },
-          {
-            name: "minLength",
-            message: `Phone number must be at least ${validators.minLength.phone} characters long`
-          }
-        ]
-      },
-      password: {
-        data: ref(""),
-        id: "password",
-        placeholder: "Enter Password",
-        labelText: "Password",
-        type: "password",
-        validators: [
-          {
-            name: "required",
-            message: "Password cannot be blank"
-          },
-          {
-            name: "minLength",
-            message: `Password must be at least ${validators.minLength.password} characters long`
-          }
-        ]
-      },
-      password2: {
-        data: ref(""),
-        id: "password2",
-        placeholder: "Repeat your password",
-        labelText: "Repeat password",
-        type: "password",
-        validators: [
-          {
-            name: "required",
-            message: "Password cannot be blank"
-          },
-          {
-            name: "sameAs",
-            message: "Your passwords did not match"
-          }
-        ]
-      },
-      description: {
-        data: ref(""),
-        id: "description",
-        placeholder: "Enter Description",
-        labelText: "Description",
-        validators: [
-          {
-            name: "required",
-            message: "Description cannot be blank"
-          },
-          {
-            name: "minLength",
-            message: `Description must be at least ${validators.minLength.description} characters long`
-          },
-          {
-            name: "maxlength",
-            message: `Description must be at max ${validators.maxLength.description} characters long`
-          }
-        ]
-      }
-    };
+    const signUpFormData = formData.signUp;
 
     const rules = {
       email: {
@@ -180,13 +121,12 @@ export default {
         minLength: minLength(validators.minLength.password)
       },
       password2: {
-        required,
-        sameAs: sameAs(signUpFormData.password.data, "")
+        sameAs: sameAs(signUpFormData.password)
       },
       full_name: {
         required,
         alpha,
-        minLength: minLength(validators.minLength.fullname)
+        minLength: minLength(validators.minLength.full_name)
       },
       phone: {
         required,
@@ -194,28 +134,22 @@ export default {
       },
       description: {
         required,
-        maxlength: maxLength(validators.maxLength.description),
+        maxLength: maxLength(validators.maxLength.description),
         minLength: minLength(validators.minLength.description)
       }
     };
 
-    const v$ = useVuelidate(rules, getStates(signUpFormData));
+    const v$ = useVuelidate(rules, signUpFormData);
 
-    // function signUp() {
-    // console.log("Data is valid");
     // axios
     //   .post(urls.signUp, signUpFormData)
     //   .then(res => console.log(res.data))
     //   .catch(err => console.log(err));
-    // }
 
     function signUp() {
       // Validate data
       v$.value.$touch();
 
-      // console.log(v$.value.password.$model);
-      console.log(signUpFormData.value.full_name.data);
-      console.log(v$.value.$invalid);
       // If data is invalid
       if (v$.value.$invalid) {
         error("Your data is invalid");
@@ -228,7 +162,9 @@ export default {
     return {
       signUp,
       signUpFormData,
-      v$
+      v$,
+      getValidator,
+      validators
     };
   }
 };

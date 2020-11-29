@@ -8,8 +8,24 @@
         <p>Please fill in this form to login into your account.</p>
         <hr />
 
-        <FormField :field="loginFormData.email" :v$field="v$.email" />
-        <FormField :field="loginFormData.password" :v$field="v$.password" />
+        <FormField
+          id="email"
+          :v$field="v$.email"
+          placeholder="Enter email"
+          label-text="Email"
+          :validators="[getValidator.required('Email'), getValidator.email()]"
+        />
+        <FormField
+          :v$field="v$.password"
+          id="password"
+          placeholder="Enter password"
+          label-text="Password"
+          input-type="password"
+          :validators="[
+            getValidator.required('Password'),
+            getValidator.minLength('Password', 'password')
+          ]"
+        />
 
         <button type="submit" class="register-btn">Login</button>
       </div>
@@ -29,7 +45,6 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import FormField from "@/components/FormField";
 
-import { ref } from "vue";
 import axios from "axios";
 
 import { useVuelidate } from "@vuelidate/core";
@@ -41,7 +56,8 @@ import { auth } from "@/utils/auth";
 import {
   getInputFieldValidationClasses,
   validators,
-  getStates
+  getValidator,
+  formData
 } from "@/utils/forms";
 
 export default {
@@ -52,41 +68,7 @@ export default {
     FormField
   },
   setup() {
-    const loginFormData = {
-      email: {
-        data: ref(""),
-        id: "email",
-        placeholder: "Enter email",
-        labelText: "Email",
-        validators: [
-          {
-            name: "required",
-            message: "Email cannot be blank"
-          },
-          {
-            name: "email",
-            message: "Enter a valid email"
-          }
-        ]
-      },
-      password: {
-        data: ref(""),
-        id: "password",
-        placeholder: "Enter Password",
-        labelText: "Password",
-        type: "password",
-        validators: [
-          {
-            name: "required",
-            message: "Password cannot be blank"
-          },
-          {
-            name: "minLength",
-            message: `Password must be at least ${validators.minLength.password} characters long`
-          }
-        ]
-      }
-    };
+    let loginFormData = formData.login;
 
     const rules = {
       email: {
@@ -99,7 +81,7 @@ export default {
       }
     };
 
-    const v$ = useVuelidate(rules, getStates(loginFormData));
+    const v$ = useVuelidate(rules, loginFormData);
 
     function login() {
       // Validate data
@@ -112,7 +94,10 @@ export default {
       }
 
       // If data is valid
-      success("You were logged in successfully");
+      success("You were logged in successfully").finally(() =>
+        location.reload()
+      );
+
       // axios
       //   .post(urls.login, { email, password })
       //   .then(res => auth.setCredentials(res.data.auth_token))
@@ -125,8 +110,8 @@ export default {
       //   .then(res => console.log(res.data))
       //   .catch(err => console.log(err));
 
-      console.log(loginFormData.email.data.value);
-      console.log(loginFormData.password.data.value);
+      console.log(loginFormData.email.value);
+      console.log(loginFormData.password.value);
       // console.log(v$.value.password.$model);
     }
 
@@ -141,7 +126,9 @@ export default {
       whoAmI,
       v$,
       getInputFieldValidationClasses,
-      loginFormData
+      loginFormData,
+      validators,
+      getValidator
     };
   }
 };
