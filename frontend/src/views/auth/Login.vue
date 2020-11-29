@@ -8,60 +8,8 @@
         <p>Please fill in this form to login into your account.</p>
         <hr />
 
-        <div class="form-field">
-          <FieldLabel
-            :label="getFieldLabelProps('email', 'Email', vuelidate.email)"
-          />
-          <input
-            type="text"
-            placeholder="Enter Email"
-            v-model="vuelidate.email.$model"
-            :class="getInputFieldValidationClasses(vuelidate.email)"
-            id="email"
-          />
-
-          <ValidationMessages
-            :field="vuelidate.email"
-            :validators="[
-              {
-                name: 'required',
-                message: 'Email cannot be blank'
-              },
-              {
-                name: 'emailValidator',
-                message: 'Enter a valid email'
-              }
-            ]"
-          />
-        </div>
-
-        <div class="form-field">
-          <FieldLabel
-            :label="
-              getFieldLabelProps('password', 'Password', vuelidate.password)
-            "
-          />
-          <input
-            type="password"
-            placeholder="Enter Password"
-            v-model="vuelidate.password.$model"
-            :class="getInputFieldValidationClasses(vuelidate.password)"
-            id="psw"
-          />
-          <ValidationMessages
-            :field="vuelidate.password"
-            :validators="[
-              {
-                name: 'required',
-                message: 'Password cannot be blank'
-              },
-              {
-                name: 'minLength',
-                message: `Password must be at least ${validators.minLength.password} characters long`
-              }
-            ]"
-          />
-        </div>
+        <FormField :field="loginFormData.email" :v$field="v$.email" />
+        <FormField :field="loginFormData.password" :v$field="v$.password" />
 
         <button type="submit" class="register-btn">Login</button>
       </div>
@@ -70,7 +18,7 @@
         <p>Don't have an account yet? <a href="#">Sign up</a>.</p>
       </div>
     </form>
-    <button @click="whoAmI" :disabled="vuelidate.$invalid" class="register-btn">
+    <button @click="whoAmI" class="register-btn">
       WhoAmI
     </button>
   </div>
@@ -79,26 +27,21 @@
 <script>
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
-import ValidationMessages from "@/components/ValidationMessages";
-import FieldLabel from "@/components/FieldLabel";
+import FormField from "@/components/FormField";
 
 import { ref } from "vue";
 import axios from "axios";
 
 import { useVuelidate } from "@vuelidate/core";
-import {
-  required,
-  minLength,
-  email as emailValidator
-} from "@vuelidate/validators";
+import { required, minLength, email } from "@vuelidate/validators";
 
-import { notify } from "@/utils/use";
+import { success, error } from "@/utils/notifications";
 import { urls } from "@/utils/api";
 import { auth } from "@/utils/auth";
 import {
-  getFieldLabelProps,
   getInputFieldValidationClasses,
-  validators
+  validators,
+  getStates
 } from "@/utils/forms";
 
 export default {
@@ -106,18 +49,48 @@ export default {
   components: {
     Navbar,
     Sidebar,
-    ValidationMessages,
-    FieldLabel
+    FormField
   },
   setup() {
-    const loginFormData = ref({
-      email: "",
-      password: ""
-    });
+    const loginFormData = {
+      email: {
+        data: ref(""),
+        id: "email",
+        placeholder: "Enter email",
+        labelText: "Email",
+        validators: [
+          {
+            name: "required",
+            message: "Email cannot be blank"
+          },
+          {
+            name: "email",
+            message: "Enter a valid email"
+          }
+        ]
+      },
+      password: {
+        data: ref(""),
+        id: "password",
+        placeholder: "Enter Password",
+        labelText: "Password",
+        type: "password",
+        validators: [
+          {
+            name: "required",
+            message: "Password cannot be blank"
+          },
+          {
+            name: "minLength",
+            message: `Password must be at least ${validators.minLength.password} characters long`
+          }
+        ]
+      }
+    };
 
     const rules = {
       email: {
-        emailValidator,
+        email,
         required
       },
       password: {
@@ -126,16 +99,20 @@ export default {
       }
     };
 
-    const vuelidate = useVuelidate(rules, loginFormData);
+    const v$ = useVuelidate(rules, getStates(loginFormData));
 
     function login() {
-      vuelidate.value.$touch();
+      // Validate data
+      v$.value.$touch();
 
-      if (vuelidate.value.$invalid) {
-        console.log("DATA IS INVALID");
+      // If it is still invalid, notify user
+      if (v$.value.$invalid) {
+        error("Your data is invalid");
         return;
       }
-      console.log("EVERYTHING IS OKAY");
+
+      // If data is valid
+      success("You were logged in successfully");
       // axios
       //   .post(urls.login, { email, password })
       //   .then(res => auth.setCredentials(res.data.auth_token))
@@ -147,10 +124,10 @@ export default {
       //   .get(urls.whoAmI, auth.getCredentials())
       //   .then(res => console.log(res.data))
       //   .catch(err => console.log(err));
-      //
-      // console.log(auth.getToken());
 
-      console.log(notify);
+      console.log(loginFormData.email.data.value);
+      console.log(loginFormData.password.data.value);
+      // console.log(v$.value.password.$model);
     }
 
     function logout() {
@@ -162,10 +139,9 @@ export default {
       login,
       logout,
       whoAmI,
-      vuelidate,
-      getFieldLabelProps,
+      v$,
       getInputFieldValidationClasses,
-      validators
+      loginFormData
     };
   }
 };

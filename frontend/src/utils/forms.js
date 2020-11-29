@@ -1,15 +1,9 @@
+import { ref } from "vue";
+
 export const getInputFieldValidationClasses = function(field) {
   return {
     valid: field.$dirty && !field.$invalid,
     invalid: field.$dirty && field.$invalid
-  };
-};
-
-export const getFieldLabelProps = function(for_id, text, field) {
-  return {
-    for: for_id,
-    text: text,
-    field: field
   };
 };
 
@@ -24,3 +18,12 @@ export const validators = {
     description: 1200
   }
 };
+
+export function getStates(formData) {
+  let obj = {};
+  for (let el in formData) {
+    let key = el.toString();
+    obj[key] = formData[key].data;
+  }
+  return ref(obj);
+}

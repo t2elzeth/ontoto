@@ -1,13 +1,13 @@
 <template>
-  <label :for="label.for">
-    <b>{{ label.text }}</b>
+  <label :for="for_id">
+    <b>{{ text }}</b>
     <span
       class="char-counter"
       :class="{
-        hide: !label.field.$model.length || !label.field.$invalid
+        hide: !v$.$model.length || !v$.$invalid
       }"
     >
-      {{ label.field.$model.length }}
+      {{ v$.$model.length }}
     </span>
   </label>
 </template>
@@ -16,10 +16,15 @@
 export default {
   name: "FieldLabel",
   props: {
-    label: {
-      type: Object,
-      required: true
-    }
+    for: String,
+    text: String,
+    v$field: Object
+  },
+  setup(props) {
+    return {
+      v$: props.v$field,
+      for_id: props.for
+    };
   }
 };
 </script>

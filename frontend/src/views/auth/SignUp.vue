@@ -8,188 +8,15 @@
         <p>Please fill in this form to create an account.</p>
         <hr />
 
-        <div class="form-field">
-          <FieldLabel
-            :label="getFieldLabelProps('email', 'Email', vuelidate.email)"
-          />
-          <input
-            type="text"
-            placeholder="Enter Email"
-            v-model="vuelidate.email.$model"
-            :class="getInputFieldValidationClasses(vuelidate.email)"
-            id="email"
-          />
-          <ValidationMessages
-            :field="vuelidate.email"
-            :validators="[
-              {
-                name: 'required',
-                message: 'Email cannot be blank'
-              },
-              {
-                name: 'emailValidator',
-                message: 'Enter a valid email'
-              }
-            ]"
-          />
-        </div>
-
-        <div class="form-field">
-          <FieldLabel
-            :label="
-              getFieldLabelProps('full_name', 'Full name', vuelidate.full_name)
-            "
-          />
-
-          <input
-            type="text"
-            placeholder="Enter Full name"
-            v-model="vuelidate.full_name.$model"
-            :class="getInputFieldValidationClasses(vuelidate.full_name)"
-            id="full_name"
-          />
-          <ValidationMessages
-            :field="vuelidate.full_name"
-            :validators="[
-              {
-                name: 'required',
-                message: 'Full name cannot be blank'
-              },
-              {
-                name: 'minLength',
-                message: `Full name must be at least ${validators.minLength.fullname} characters long`
-              },
-              {
-                name: 'alpha',
-                message: `Full name must contain only letters`
-              }
-            ]"
-          />
-        </div>
-
-        <div class="form-field">
-          <FieldLabel
-            :label="
-              getFieldLabelProps('phone', 'Phone number', vuelidate.phone)
-            "
-          />
-          <input
-            type="text"
-            placeholder="Enter phone number"
-            v-model="vuelidate.phone.$model"
-            :class="getInputFieldValidationClasses(vuelidate.phone)"
-            id="phone"
-          />
-          <ValidationMessages
-            :field="vuelidate.phone"
-            :validators="[
-              {
-                name: 'required',
-                message: 'Phone number cannot be blank'
-              },
-              {
-                name: 'minLength',
-                message: `Phone number must be at least ${validators.minLength.phone} characters long`
-              }
-            ]"
-          />
-        </div>
-
-        <div class="form-field">
-          <FieldLabel
-            :label="
-              getFieldLabelProps('password', 'Password', vuelidate.password)
-            "
-          />
-          <input
-            type="password"
-            placeholder="Enter Password"
-            v-model="vuelidate.password.$model"
-            :class="getInputFieldValidationClasses(vuelidate.password)"
-            id="password"
-          />
-          <ValidationMessages
-            :field="vuelidate.password"
-            :validators="[
-              {
-                name: 'required',
-                message: 'Password cannot be blank'
-              },
-              {
-                name: 'minLength',
-                message: `Password must be at least ${validators.minLength.password} characters long`
-              }
-            ]"
-          />
-        </div>
-
-        <div class="form-field">
-          <FieldLabel
-            :label="
-              getFieldLabelProps(
-                'password2',
-                'Repeat password',
-                vuelidate.password2
-              )
-            "
-          />
-          <input
-            type="password"
-            placeholder="Repeat your password"
-            v-model="vuelidate.password2.$model"
-            :class="getInputFieldValidationClasses(vuelidate.password2)"
-            id="password2"
-          />
-          <ValidationMessages
-            :field="vuelidate.password2"
-            :validators="[
-              {
-                name: 'required',
-                message: 'Password cannot be blank'
-              },
-              {
-                name: 'sameAsPassword',
-                message: 'Your passwords did not match'
-              }
-            ]"
-          />
-        </div>
-
-        <div class="form-field">
-          <FieldLabel
-            :label="
-              getFieldLabelProps(
-                'description',
-                'Description',
-                vuelidate.description
-              )
-            "
-          />
-          <input
-            type="text"
-            placeholder="Enter Description"
-            v-model="vuelidate.description.$model"
-            :class="getInputFieldValidationClasses(vuelidate.description)"
-            id="description"
-          />
-          <ValidationMessages
-            :field="vuelidate.description"
-            :validators="[
-              {
-                name: 'required',
-                message: 'Description cannot be blank'
-              },
-              {
-                name: 'minLength',
-                message: `Description must be at least ${validators.minLength.description} characters long`
-              },
-              {
-                name: 'maxlength',
-                message: `Description must be at max ${validators.maxLength.description} characters long`
-              }
-            ]"
-          />
-        </div>
+        <FormField :field="signUpFormData.email" :v$field="v$.email" />
+        <FormField :field="signUpFormData.full_name" :v$field="v$.full_name" />
+        <FormField :field="signUpFormData.phone" :v$field="v$.phone" />
+        <FormField :field="signUpFormData.password" :v$field="v$.password" />
+        <FormField :field="signUpFormData.password2" :v$field="v$.password2" />
+        <FormField
+          :field="signUpFormData.description"
+          :v$field="v$.description"
+        />
 
         <button type="submit" class="register-btn">Sign Up</button>
         <p class="agreement">
@@ -208,14 +35,12 @@
 <script>
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
-import ValidationMessages from "@/components/ValidationMessages";
-import FieldLabel from "@/components/FieldLabel";
+import FormField from "@/components/FormField";
 
 import { ref } from "vue";
 // import axios from "axios";
-// import { ref } from "vue";
 import {
-  email as emailValidator,
+  email,
   minLength,
   required,
   sameAs,
@@ -225,34 +50,130 @@ import {
 import { useVuelidate } from "@vuelidate/core";
 
 // import { urls } from "@/utils/api";
-import {
-  getInputFieldValidationClasses,
-  getFieldLabelProps,
-  validators
-} from "@/utils/forms";
+import { success, error } from "@/utils/notifications";
+import { validators, getStates } from "@/utils/forms";
 
 export default {
   name: "SignUp",
   components: {
     Navbar,
     Sidebar,
-    ValidationMessages,
-    FieldLabel
+    FormField
   },
   setup() {
-    const signUpFormData = ref({
-      email: "",
-      full_name: "",
-      phone: "",
-      password: "",
-      password2: "",
-      description: ""
-    });
+    const signUpFormData = {
+      email: {
+        data: ref(""),
+        id: "email",
+        placeholder: "Enter email",
+        labelText: "Email",
+        validators: [
+          {
+            name: "required",
+            message: "Email cannot be blank"
+          },
+          {
+            name: "email",
+            message: "Enter a valid email"
+          }
+        ]
+      },
+      full_name: {
+        data: ref(""),
+        id: "full_name",
+        placeholder: "Enter Full name",
+        labelText: "Full name",
+        validators: [
+          {
+            name: "required",
+            message: "Full name cannot be blank"
+          },
+          {
+            name: "minLength",
+            message: `Full name must be at least ${validators.minLength.fullname} characters long`
+          },
+          {
+            name: "alpha",
+            message: `Full name must contain only letters`
+          }
+        ]
+      },
+      phone: {
+        data: ref(""),
+        id: "phone",
+        placeholder: "Enter Phone number",
+        labelText: "Phone number",
+        validators: [
+          {
+            name: "required",
+            message: "Phone number cannot be blank"
+          },
+          {
+            name: "minLength",
+            message: `Phone number must be at least ${validators.minLength.phone} characters long`
+          }
+        ]
+      },
+      password: {
+        data: ref(""),
+        id: "password",
+        placeholder: "Enter Password",
+        labelText: "Password",
+        type: "password",
+        validators: [
+          {
+            name: "required",
+            message: "Password cannot be blank"
+          },
+          {
+            name: "minLength",
+            message: `Password must be at least ${validators.minLength.password} characters long`
+          }
+        ]
+      },
+      password2: {
+        data: ref(""),
+        id: "password2",
+        placeholder: "Repeat your password",
+        labelText: "Repeat password",
+        type: "password",
+        validators: [
+          {
+            name: "required",
+            message: "Password cannot be blank"
+          },
+          {
+            name: "sameAs",
+            message: "Your passwords did not match"
+          }
+        ]
+      },
+      description: {
+        data: ref(""),
+        id: "description",
+        placeholder: "Enter Description",
+        labelText: "Description",
+        validators: [
+          {
+            name: "required",
+            message: "Description cannot be blank"
+          },
+          {
+            name: "minLength",
+            message: `Description must be at least ${validators.minLength.description} characters long`
+          },
+          {
+            name: "maxlength",
+            message: `Description must be at max ${validators.maxLength.description} characters long`
+          }
+        ]
+      }
+    };
 
     const rules = {
       email: {
         required,
-        emailValidator
+        email
       },
       password: {
         required,
@@ -260,9 +181,7 @@ export default {
       },
       password2: {
         required,
-        sameAsPassword: sameAs(function() {
-          return signUpFormData.value.password;
-        })
+        sameAs: sameAs(signUpFormData.password.data, "")
       },
       full_name: {
         required,
@@ -280,34 +199,36 @@ export default {
       }
     };
 
-    const vuelidate = useVuelidate(rules, signUpFormData);
+    const v$ = useVuelidate(rules, getStates(signUpFormData));
+
+    // function signUp() {
+    // console.log("Data is valid");
+    // axios
+    //   .post(urls.signUp, signUpFormData)
+    //   .then(res => console.log(res.data))
+    //   .catch(err => console.log(err));
+    // }
 
     function signUp() {
-      console.log("FORM HAS BEEN SUBMITTED");
+      // Validate data
+      v$.value.$touch();
 
-      vuelidate.value.$touch();
-      console.log(signUpFormData.value.password);
-      console.log(vuelidate.value.password2.$model);
-      console.log(vuelidate.value.password2.sameAsPassword.$invalid);
+      // console.log(v$.value.password.$model);
+      console.log(signUpFormData.value.full_name.data);
+      console.log(v$.value.$invalid);
+      // If data is invalid
+      if (v$.value.$invalid) {
+        error("Your data is invalid");
+        return;
+      }
 
-      // if (vuelidate.value.$invalid) {
-      //   console.log("DATA IS INVALID");
-      //   return;
-      // }
-      // console.log("Data is valid");
-      // axios
-      //   .post(urls.signUp, signUpFormData)
-      //   .then(res => console.log(res.data))
-      //   .catch(err => console.log(err));
+      success("Your account has been successfully created");
     }
 
     return {
-      signUpFormData,
       signUp,
-      vuelidate,
-      getInputFieldValidationClasses,
-      getFieldLabelProps,
-      validators
+      signUpFormData,
+      v$
     };
   }
 };

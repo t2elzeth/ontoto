@@ -43,32 +43,7 @@
     .agreement {
       font-size: 12px;
     }
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 15px;
-      margin: 5px 0 0 0;
-      display: inline-block;
-      border: 2px hidden #ddd;
-      background: #f1f1f1;
-    }
 
-    input[type="text"]:focus,
-    input[type="password"]:focus {
-      background-color: #ddd;
-      outline: none;
-    }
-
-    input[type="text"].invalid,
-    input[type="password"].invalid {
-      border: 2px dashed red;
-    }
-
-    input[type="text"].valid,
-    input[type="password"].valid {
-      border: 2px solid #46ff46;
-      background: #46ff46;
-    }
   }
   .signin {
     background-color: #f1f1f1;

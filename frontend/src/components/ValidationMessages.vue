@@ -2,12 +2,12 @@
   <div v-for="validator in validators" :key="validator.name">
     <small
       class="invalid-feedback"
-      v-if="field.$dirty && field[validator.name].$invalid"
+      v-if="v$.$dirty && v$[validator.name].$invalid"
     >
       {{ validator.message }}
     </small>
   </div>
-  <small class="valid-feedback" v-if="field.$dirty && !field.$invalid">
+  <small class="valid-feedback" v-if="v$.$dirty && !v$.$invalid">
     Everything is fine
   </small>
 </template>
@@ -16,7 +16,7 @@
 export default {
   name: "ValidationMessages",
   props: {
-    field: {
+    v$field: {
       type: Object,
       required: true
     },
@@ -24,6 +24,11 @@ export default {
       type: Array,
       required: true
     }
+  },
+  setup(props) {
+    return {
+      v$: props.v$field
+    };
   }
 };
 </script>
