@@ -86,7 +86,6 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import FormField from "@/components/FormField";
 
-// import axios from "axios";
 import {
   email,
   required,
@@ -97,7 +96,6 @@ import {
 } from "@vuelidate/validators/dist/raw.esm";
 import { useVuelidate } from "@vuelidate/core";
 
-// import { urls } from "@/utils/api";
 import { success, error } from "@/utils/notifications";
 import { validators, getValidator, formData } from "@/utils/forms";
 
@@ -161,10 +159,8 @@ export default {
 
     return {
       signUp,
-      signUpFormData,
       v$,
-      getValidator,
-      validators
+      getValidator
     };
   }
 };

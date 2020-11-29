@@ -53,12 +53,7 @@ import { required, minLength, email } from "@vuelidate/validators";
 import { success, error } from "@/utils/notifications";
 import { urls } from "@/utils/api";
 import { auth } from "@/utils/auth";
-import {
-  getInputFieldValidationClasses,
-  validators,
-  getValidator,
-  formData
-} from "@/utils/forms";
+import { validators, getValidator, formData } from "@/utils/forms";
 
 export default {
   name: "Login",
@@ -125,9 +120,7 @@ export default {
       logout,
       whoAmI,
       v$,
-      getInputFieldValidationClasses,
       loginFormData,
-      validators,
       getValidator
     };
   }
