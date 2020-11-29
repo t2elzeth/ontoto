@@ -1,4 +1,6 @@
-import { notify } from "@/utils/pluginsConstants";
+import VueSimpleAlert from "vue-simple-alert";
+
+export const notify = VueSimpleAlert;
 
 export function alert(title, message, type = "info") {
   return notify.alert(message, title, type);
