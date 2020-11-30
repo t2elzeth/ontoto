@@ -8,7 +8,7 @@
       :id="id"
     />
 
-    <ValidationMessages :v$field="v$" :validators="validators" />
+    <ValidationMessages :v$field="v$" :field-name="formField" />
   </div>
 </template>
 
@@ -26,15 +26,15 @@ export default {
   },
   props: {
     v$field: Object,
-    id: String,
     placeholder: String,
     labelText: String,
-    validators: Array,
-    inputType: String
+    inputType: String,
+    formField: String,
   },
   setup(props) {
     return {
-      v$: props.v$field
+      v$: props.v$field,
+      id: props.fieldName
     };
   }
 };

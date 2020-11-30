@@ -10,61 +10,41 @@
 
         <FormField
           :v$field="v$.email"
-          id="email"
           placeholder="Enter email"
           label-text="Email"
-          :validators="[getValidator.required('Email'), getValidator.email()]"
+          form-field="email"
         />
         <FormField
           :v$field="v$.full_name"
-          id="full_name"
           placeholder="Enter full name"
           label-text="Full name"
-          :validators="[
-            getValidator.required('Full name'),
-            getValidator.minLength('Full name', 'full_name'),
-            getValidator.alpha('alpha')
-          ]"
+          form-field="full_name"
         />
         <FormField
           :v$field="v$.phone"
-          id="phone"
           placeholder="Enter phone number"
           label-text="Phone number"
-          :validators="[
-            getValidator.required('Phone number'),
-            getValidator.minLength('Phone number', 'phone')
-          ]"
+          form-field="phone"
         />
         <FormField
           :v$field="v$.password"
-          id="password"
           placeholder="Enter password"
           label-text="Password"
           input-type="password"
-          :validators="[
-            getValidator.required('Password'),
-            getValidator.minLength('Password', 'password')
-          ]"
+          form-field="password"
         />
         <FormField
           :v$field="v$.password2"
-          id="password2"
           placeholder="Repeat your password"
           label-text="Repeat password"
           input-type="password"
-          :validators="[getValidator.sameAs('passwords')]"
+          form-field="password2"
         />
         <FormField
           :v$field="v$.description"
-          id="description"
           placeholder="Enter description"
           label-text="Description"
-          :validators="[
-            getValidator.required('Description'),
-            getValidator.maxLength('Description', 'description'),
-            getValidator.minLength('Description', 'description')
-          ]"
+          form-field="description"
         />
 
         <button type="submit" class="register-btn">Sign Up</button>
@@ -97,7 +77,8 @@ import {
 import { useVuelidate } from "@vuelidate/core";
 
 import { success, error } from "@/utils/notifications";
-import { validators, getValidator, formData } from "@/utils/forms";
+import { formData } from "@/utils/forms";
+import {validators} from "@/utils/validators";
 
 export default {
   name: "SignUp",
@@ -160,7 +141,6 @@ export default {
     return {
       signUp,
       v$,
-      getValidator
     };
   }
 };

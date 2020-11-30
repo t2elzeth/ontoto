@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import {messages} from "@/utils/validators";
+
 export default {
   name: "ValidationMessages",
   props: {
@@ -20,14 +22,12 @@ export default {
       type: Object,
       required: true
     },
-    validators: {
-      type: Array,
-      required: true
-    }
+    fieldName: String,
   },
   setup(props) {
     return {
-      v$: props.v$field
+      v$: props.v$field,
+      validators: messages[props.fieldName]
     };
   }
 };

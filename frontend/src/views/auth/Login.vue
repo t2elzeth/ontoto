@@ -9,22 +9,17 @@
         <hr />
 
         <FormField
-          id="email"
           :v$field="v$.email"
           placeholder="Enter email"
           label-text="Email"
-          :validators="[getValidator.required('Email'), getValidator.email()]"
+          form-field="email"
         />
         <FormField
           :v$field="v$.password"
-          id="password"
           placeholder="Enter password"
           label-text="Password"
           input-type="password"
-          :validators="[
-            getValidator.required('Password'),
-            getValidator.minLength('Password', 'password')
-          ]"
+          form-field="password"
         />
 
         <button type="submit" class="register-btn">Login</button>
@@ -53,7 +48,8 @@ import { required, minLength, email } from "@vuelidate/validators";
 import { success, error } from "@/utils/notifications";
 import { urls } from "@/utils/api";
 import { auth } from "@/utils/auth";
-import { validators, getValidator, formData } from "@/utils/forms";
+import { formData } from "@/utils/forms";
+import { validators } from "@/utils/validators";
 
 export default {
   name: "Login",
@@ -120,8 +116,6 @@ export default {
       logout,
       whoAmI,
       v$,
-      loginFormData,
-      getValidator
     };
   }
 };
