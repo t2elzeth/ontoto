@@ -1,25 +1,25 @@
 <template>
-  <Navbar />
-  <Sidebar />
+  <Navbar/>
+  <Sidebar/>
   <div class="main">
     <form @submit.prevent="login">
       <div class="container">
         <h1>Login</h1>
         <p>Please fill in this form to login into your account.</p>
-        <hr />
+        <hr/>
 
         <FormField
-          :v$field="v$.email"
-          placeholder="Enter email"
-          label-text="Email"
-          form-field="email"
+            :v$field="v$.email"
+            placeholder="Enter email"
+            label-text="Email"
+            form-field="email"
         />
         <FormField
-          :v$field="v$.password"
-          placeholder="Enter password"
-          label-text="Password"
-          input-type="password"
-          form-field="password"
+            :v$field="v$.password"
+            placeholder="Enter password"
+            label-text="Password"
+            input-type="password"
+            form-field="password"
         />
 
         <button type="submit" class="register-btn">Login</button>
@@ -42,14 +42,13 @@ import FormField from "@/components/FormField";
 
 import axios from "axios";
 
-import { useVuelidate } from "@vuelidate/core";
-import { required, minLength, email } from "@vuelidate/validators";
+import {useVuelidate} from "@vuelidate/core";
 
-import { success, error } from "@/utils/notifications";
-import { urls } from "@/utils/api";
-import { auth } from "@/utils/auth";
-import { formData } from "@/utils/forms";
-import { validators } from "@/utils/validators";
+import {success, error} from "@/utils/notifications";
+import {urls} from "@/utils/api";
+import {auth} from "@/utils/auth";
+import {formData} from "@/utils/forms";
+import {rules} from "@/utils/validators";
 
 export default {
   name: "Login",
@@ -61,18 +60,7 @@ export default {
   setup() {
     let loginFormData = formData.login;
 
-    const rules = {
-      email: {
-        email,
-        required
-      },
-      password: {
-        required,
-        minLength: minLength(validators.minLength.password)
-      }
-    };
-
-    const v$ = useVuelidate(rules, loginFormData);
+    const v$ = useVuelidate(rules.login(), loginFormData);
 
     function login() {
       // Validate data
@@ -86,7 +74,7 @@ export default {
 
       // If data is valid
       success("You were logged in successfully").finally(() =>
-        location.reload()
+          location.reload()
       );
 
       // axios
@@ -100,10 +88,6 @@ export default {
       //   .get(urls.whoAmI, auth.getCredentials())
       //   .then(res => console.log(res.data))
       //   .catch(err => console.log(err));
-
-      console.log(loginFormData.email.value);
-      console.log(loginFormData.password.value);
-      // console.log(v$.value.password.$model);
     }
 
     function logout() {
