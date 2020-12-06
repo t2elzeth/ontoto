@@ -1,16 +1,16 @@
 import {constants} from "@/utils/validation";
 
 export const getValidator = {
-    minLength: function (what, formField) {
+    minLength: function (formField) {
         return {
             name: "minLength",
-            message: `${what} must be at least ${constants.minLength[formField]} characters long`
+            message: `This field must be at least ${constants.minLength[formField]} characters long`
         };
     },
-    required: function (what) {
+    required: function () {
         return {
             name: "required",
-            message: `${what} cannot be blank`
+            message: "This field cannot be blank"
         };
     },
     email: function () {
@@ -19,16 +19,16 @@ export const getValidator = {
             message: "Enter a valid email"
         };
     },
-    maxLength: function (what, formField) {
+    maxLength: function (formField) {
         return {
             name: "maxLength",
-            message: `${what} must be at max ${constants.minLength[formField]}`
+            message: `This field must be at max ${constants.minLength[formField]}`
         };
     },
-    alpha: function (what) {
+    alpha: function () {
         return {
             name: "alpha",
-            message: `${what} must contain only letters`
+            message: "This field must contain only letters"
         };
     },
     sameAs: function (what) {

@@ -60,28 +60,28 @@ export const rules = {
 
 export const messages = {
     email: [
-        getValidator.required('Email'),
+        getValidator.required(),
         getValidator.email()
     ],
     full_name: [
-        getValidator.required('Full name'),
-        getValidator.minLength('Full name', 'full_name'),
-        getValidator.alpha('alpha')
+        getValidator.required(),
+        getValidator.minLength("full_name"),
+        getValidator.alpha()
     ],
     phone: [
-        getValidator.required('Phone number'),
-        getValidator.minLength('Phone number', 'phone')
+        getValidator.required(),
+        getValidator.minLength("Phone number", "phone")
     ],
     password: [
-        getValidator.required('Password'),
-        getValidator.minLength('Password', 'password')
+        getValidator.required(),
+        getValidator.minLength("Password", "password")
     ],
     password2: [
-        getValidator.sameAs('passwords')
+        getValidator.sameAs("passwords")
     ],
     description: [
-        getValidator.required('Description'),
-        getValidator.maxLength('Description', 'description'),
-        getValidator.minLength('Description', 'description')
+        getValidator.required(),
+        getValidator.maxLength("description"),
+        getValidator.minLength("Description", "description")
     ]
 }
