@@ -16,8 +16,7 @@ export const constants = {
 
 export const rules = {
     email: {
-        email,
-        required
+        email, required
     },
     password: {
         required,
@@ -30,8 +29,7 @@ export const rules = {
         }
     },
     full_name: {
-        required,
-        alpha,
+        required, alpha,
         minLength: minLength(constants.minLength.full_name)
     },
     phone: {
@@ -44,13 +42,10 @@ export const rules = {
         minLength: minLength(constants.minLength.description)
     },
     signUp(formData) {
-        let password2 = {
-            sameAs: sameAs(formData.password)
-        }
         return {
             email: this.email,
             password: this.password,
-            password2: password2,
+            password2: {sameAs: sameAs(formData.password)},
             full_name: this.full_name,
             phone: this.phone,
             description: this.description
