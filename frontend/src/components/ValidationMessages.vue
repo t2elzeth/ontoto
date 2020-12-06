@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {messages} from "@/utils/validators";
+import {messages} from "@/utils/validation";
 
 export default {
   name: "ValidationMessages",

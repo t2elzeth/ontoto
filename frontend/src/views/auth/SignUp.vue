@@ -70,7 +70,7 @@ import {useVuelidate} from "@vuelidate/core";
 
 import {success, error} from "@/utils/notifications";
 import {formData} from "@/utils/forms";
-import {rules} from "@/utils/validators";
+import {rules} from "@/utils/validation";
 
 export default {
   name: "SignUp",
@@ -94,10 +94,7 @@ export default {
       v$.value.$touch();
 
       // If data is invalid
-      if (v$.value.$invalid) {
-        error("Your data is invalid");
-        return;
-      }
+      if (v$.value.$invalid) return error("Your data is invalid");
 
       success("Your account has been successfully created");
     }

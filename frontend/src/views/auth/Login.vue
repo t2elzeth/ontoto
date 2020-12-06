@@ -48,7 +48,7 @@ import {success, error} from "@/utils/notifications";
 import {urls} from "@/utils/api";
 import {auth} from "@/utils/auth";
 import {formData} from "@/utils/forms";
-import {rules} from "@/utils/validators";
+import {rules} from "@/utils/validation";
 
 export default {
   name: "Login",
@@ -67,10 +67,7 @@ export default {
       v$.value.$touch();
 
       // If it is still invalid, notify user
-      if (v$.value.$invalid) {
-        error("Your data is invalid");
-        return;
-      }
+      if (v$.value.$invalid) return error("Your data is invalid");
 
       // If data is valid
       success("You were logged in successfully").finally(() =>
