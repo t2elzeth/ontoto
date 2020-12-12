@@ -92,7 +92,6 @@ export default {
     function signUp() {
       // Validate data
       v$.value.$touch();
-
       // If data is invalid
       if (v$.value.$invalid) return error("Your data is invalid");
 

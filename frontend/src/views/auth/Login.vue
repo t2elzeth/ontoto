@@ -21,7 +21,6 @@
             input-type="password"
             form-field="password"
         />
-
         <button type="submit" class="register-btn">Login</button>
       </div>
 
@@ -65,7 +64,6 @@ export default {
     function login() {
       // Validate data
       v$.value.$touch();
-
       // If it is still invalid, notify user
       if (v$.value.$invalid) return error("Your data is invalid");
 
