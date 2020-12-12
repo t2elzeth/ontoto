@@ -8,11 +8,10 @@
 import {computed} from "vue";
 import {useRoute} from "vue-router";
 
-const defaultLayout = "default"
-
 export default {
   name: "App",
   setup() {
+    const defaultLayout = "default"
     const route = useRoute()
 
     const layout = computed(() => {
