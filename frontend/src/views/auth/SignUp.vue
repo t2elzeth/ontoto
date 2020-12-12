@@ -1,6 +1,4 @@
 <template>
-  <Navbar/>
-  <Sidebar/>
   <div class="main">
     <form @submit.prevent="signUp">
       <div class="container">
@@ -62,8 +60,6 @@
 </template>
 
 <script>
-import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
 import FormField from "@/components/FormField";
 
 import {useVuelidate} from "@vuelidate/core";
@@ -75,8 +71,6 @@ import {rules} from "@/utils/validation";
 export default {
   name: "SignUp",
   components: {
-    Navbar,
-    Sidebar,
     FormField
   },
   setup() {

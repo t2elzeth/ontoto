@@ -1,6 +1,4 @@
 <template>
-  <Navbar/>
-  <Sidebar/>
   <div class="main">
     <form @submit.prevent="login">
       <div class="container">
@@ -35,8 +33,6 @@
 </template>
 
 <script>
-import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
 import FormField from "@/components/FormField";
 
 import axios from "axios";
@@ -52,8 +48,6 @@ import {rules} from "@/utils/validation";
 export default {
   name: "Login",
   components: {
-    Navbar,
-    Sidebar,
     FormField
   },
   setup() {

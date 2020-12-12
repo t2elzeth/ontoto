@@ -1,12 +1,31 @@
 <template>
-  <!--  <div id="nav">-->
-  <!--    <router-link to="/">Home</router-link> |-->
-  <!--    <router-link to="/about">About</router-link> |-->
-  <!--    <router-link to="/signup">SignUp</router-link> |-->
-  <!--    <router-link to="/login">Login</router-link> |-->
-  <!--  </div>-->
-  <router-view />
+  <component :is="layout">
+    <router-view/>
+  </component>
 </template>
+
+<script>
+import {computed} from "vue";
+import {useRoute} from "vue-router";
+
+const defaultLayout = "default"
+
+export default {
+  name: "App",
+  setup() {
+    const route = useRoute()
+
+    const layout = computed(() => {
+      return route.meta.layout || defaultLayout
+    })
+
+    return {
+      layout
+    }
+  }
+}
+
+</script>
 
 <style>
 #app {
