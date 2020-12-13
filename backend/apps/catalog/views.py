@@ -24,11 +24,10 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         instance = self.get_object()
-
         if not instance.price == serializer.validated_data.get('price'):
-            instance.set_old_price(save=True)
+            serializer.validated_data.update({'old_price': instance.price})
 
-        return serializer.save()
+        serializer.save()
 
 
 class CategoryListView(generics.ListAPIView):

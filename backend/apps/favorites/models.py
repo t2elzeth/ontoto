@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from utils.decorators import control_save
+
 User = get_user_model()
 
 
@@ -12,10 +14,9 @@ class Favorite(models.Model):
     )
     total_products = models.PositiveIntegerField('Всего продуктов', default=0)
 
-    def count_totals(self, save=False):
+    @control_save
+    def count_totals(self, *args, **kwargs):
         self.total_products = len(self.favorite_products.all())
-        if save:
-            self.save()
 
     def __str__(self):
         return self.user.get_username()

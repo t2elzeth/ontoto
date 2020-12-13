@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
+from utils.decorators import control_save
+
 User = get_user_model()
 
 
@@ -17,15 +19,13 @@ class Cart(models.Model):
     total_price = models.DecimalField(verbose_name='Общая цена', default=0, decimal_places=2, max_digits=9)
     in_order = models.BooleanField(default=False)
 
-    def count_totals(self, save=False):
+    @control_save
+    def count_totals(self, *args, **kwargs):
         """
         Counts `total products` and `total price`
         """
         self.total_products = sum(cp.qty for cp in self.cart_products.all())
         self.total_price = sum(cp.final_price for cp in self.cart_products.all())
-
-        if save:
-            self.save()
 
     def __str__(self):
         return "{}'s cart. In order: {}".format(
@@ -52,12 +52,10 @@ class CartProduct(models.Model):
 
     date_added = models.DateTimeField(default=timezone.now)
 
-    def count_final_price(self, save=False):
+    @control_save
+    def count_final_price(self, *args, **kwargs):
         """Counts final price, but doesn't save the changes"""
         self.final_price = self.product.price * self.qty
-
-        if save:
-            self.save()
 
     def save(self, *args, **kwargs):
         """Custom save method"""
