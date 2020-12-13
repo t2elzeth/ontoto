@@ -30,10 +30,7 @@ class Cart(models.Model):
         self.total_price = totals.get('final_price__sum')
 
     def __str__(self):
-        return "{}'s cart. In order: {}".format(
-            self.user.get_username(),
-            self.in_order
-        )
+        return "{}'s cart. In order: {}".format(self.user.get_username(),self.in_order)
 
 
 class CartProduct(models.Model):
