@@ -16,7 +16,7 @@ class Favorite(models.Model):
 
     @control_save
     def count_totals(self, *args, **kwargs):
-        self.total_products = len(self.favorite_products.all())
+        self.total_products = self.favorite_products.count()
 
     def __str__(self):
         return self.user.get_username()

@@ -41,7 +41,7 @@ class Product(models.Model):
 
     @control_save
     def count_favorites_number(self, *args, **kwargs):
-        self.favorites_number = len(self.favorite_products.all())
+        self.favorites_number = self.favorite_products.count()
 
     def __str__(self):
         return self.title

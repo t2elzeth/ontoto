@@ -21,11 +21,13 @@ class Cart(models.Model):
 
     @control_save
     def count_totals(self, *args, **kwargs):
-        """
-        Counts `total products` and `total price`
-        """
-        self.total_products = sum(cp.qty for cp in self.cart_products.all())
-        self.total_price = sum(cp.final_price for cp in self.cart_products.all())
+        """Counts `total products` and `total price`"""
+        totals = self.cart_products.aggregate(
+            models.Sum('qty'),
+            models.Sum('final_price')
+        )
+        self.total_products = totals.get('qty__sum')
+        self.total_price = totals.get('final_price__sum')
 
     def __str__(self):
         return "{}'s cart. In order: {}".format(
