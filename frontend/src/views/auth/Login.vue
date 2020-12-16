@@ -1,59 +1,50 @@
 <template>
   <div class="main">
-    <form @submit.prevent="login">
-      <div class="container">
-        <h1>Login</h1>
-        <p>Please fill in this form to login into your account.</p>
-        <hr/>
-
+    <div class="container">
+      <FormHeader />
+      <form @submit.prevent="login" class="form">
         <FormField
-            :v$field="v$.email"
-            placeholder="Enter email"
-            label-text="Email"
-            form-field="email"
+          :v$field="v$.email"
+          placeholder="введите email"
+          form-field="email"
         />
         <FormField
-            :v$field="v$.password"
-            placeholder="Enter password"
-            label-text="Password"
-            input-type="password"
-            form-field="password"
+          :v$field="v$.password"
+          placeholder="пароль"
+          input-type="password"
+          form-field="password"
         />
-        <button type="submit" class="register-btn">Login</button>
-      </div>
-
-      <div class="container signin">
-        <p>Don't have an account yet? <a href="#">Sign up</a>.</p>
-      </div>
-    </form>
-    <button @click="whoAmI" class="register-btn">
-      WhoAmI
-    </button>
+        <button type="submit" class="register-btn">войти</button>
+      </form>
+      <a href="#" class="get-help">забыли пароль?</a>
+      <!--      <button @click="whoAmI">CLICK ME HARD</button>-->
+    </div>
   </div>
 </template>
 
 <script>
-import FormField from "@/components/FormField";
+import FormField from "@/components/form/FormField";
+import FormHeader from "@/components/form/FormHeader";
 
 import axios from "axios";
 
-import {useVuelidate} from "@vuelidate/core";
+import { useVuelidate } from "@vuelidate/core";
 
-import {success, error} from "@/utils/notifications";
-import {urls} from "@/utils/api";
-import {auth} from "@/utils/auth";
-import {formData} from "@/utils/forms";
-import {rules} from "@/utils/validation";
+import { success, error } from "@/utils/notifications";
+import { urls } from "@/utils/api";
+import { auth } from "@/utils/auth";
+import { formData } from "@/utils/forms";
+import { rules } from "@/utils/validation";
 
 export default {
   name: "Login",
   components: {
-    FormField
+    FormField,
+    FormHeader
   },
   setup() {
-    let loginFormData = formData.login;
-
-    const v$ = useVuelidate(rules.login(), loginFormData);
+    const loginFormData = formData.login,
+      v$ = useVuelidate(rules.login(), loginFormData);
 
     function login() {
       // Validate data
@@ -63,7 +54,7 @@ export default {
 
       // If data is valid
       success("You were logged in successfully").finally(() =>
-          location.reload()
+        location.reload()
       );
 
       // axios
@@ -71,24 +62,24 @@ export default {
       //   .then(res => auth.setCredentials(res.data.auth_token))
       //   .catch(err => console.log(err));
     }
+    function logout() {
+      axios.post(urls.logout, {}, auth.getCredentials());
+      auth.removeToken();
+    }
 
     function whoAmI() {
       // axios
       //   .get(urls.whoAmI, auth.getCredentials())
       //   .then(res => console.log(res.data))
       //   .catch(err => console.log(err));
-    }
-
-    function logout() {
-      axios.post(urls.logout, {}, auth.getCredentials());
-      auth.removeToken();
+      console.log("Salam");
     }
 
     return {
       login,
       logout,
       whoAmI,
-      v$,
+      v$
     };
   }
 };
@@ -96,4 +87,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/forms";
+.form-field {
+  margin-bottom: 30px;
+}
 </style>

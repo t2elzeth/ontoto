@@ -1,23 +1,19 @@
 <template>
-  <Navbar/>
-  <Sidebar/>
+  <Navbar />
   <main class="main">
-    <slot/>
+    <slot />
   </main>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
 
 export default {
   name: "Default",
   components: {
-    Navbar, Sidebar
+    Navbar
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

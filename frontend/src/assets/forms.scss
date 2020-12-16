@@ -1,52 +1,72 @@
+@import "mixins";
+
 .main {
-  margin-left: 160px; /* Same as the width of the sidebar */
+  height: 990px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(179.96deg, #232D86 -42.47%, rgba(196, 196, 196, 0) 164.98%);
 
   .container {
-    padding: 16px;
+    height: 750px;
+    width: 560px;
+    padding: 20px;
 
-    .form-field {
-      width: 100%;
-      margin-bottom: 22px;
-      text-align: left;
+    background: linear-gradient(0deg, #0027F3 -150%, #818ec6 55%);
+    //background: #8F9AC8;
+    border-radius: 40px;
+
+    font-family: Comfortaa, cursive;
+    font-style: normal;
+    line-height: 24px;
+    letter-spacing: 0.1em;
+
+    .form {
+      margin-top: 80px;
+      font-weight: normal;
+      font-size: 18px;
+
+      .agreement {
+        margin-bottom: 10px;
+
+        color: white;
+        text-align: left;
+      }
     }
 
-    hr {
-      border: 1px solid #f1f1f1;
-      margin-bottom: 25px;
-    }
-
-    /* Set a style for the submit/register button */
     .register-btn {
-      background-color: #4caf50;
+      width: 354px;
+      height: 60px;
       color: white;
-      padding: 16px 20px;
-      margin: 8px 0;
+
+      font-family: Comfortaa, cursive;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 22px;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.7);
+
+      background: #3D4BD0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      border-radius: 69px;
       border: none;
-      cursor: pointer;
-      width: 100%;
-      opacity: 0.9;
+
+      &:hover {
+        opacity: 1;
+      }
     }
 
-    .register-btn:hover {
-      opacity: 1;
-    }
+    .get-help {
+      display: block;
+      color: black;
+      text-decoration: none;
 
-    a {
-      color: dodgerblue;
-    }
+      font-weight: normal;
+      font-size: 18px;
 
-    .agreement {
-      font-size: 12px;
+      margin-top: 35px;
     }
-
-  }
-  .signin {
-    background-color: #f1f1f1;
-    text-align: center;
   }
 }

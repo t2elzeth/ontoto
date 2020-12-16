@@ -1,14 +1,16 @@
 <template>
-  <div class="topnav">
-    <div class="navlist">
-      <a class="active" href="#">Home</a>
-      <a href="#">News</a>
-      <a href="#">Contact</a>
-      <a href="#">About</a>
-    </div>
-    <div class="auth">
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/signup">SignUp</router-link> |
+  <div class="main">
+    <h1 id="logo">ONTOTO</h1>
+    <div class="nav-right-block">
+      <a href="#">О НАС</a>
+
+      <a href="#">
+        <img src="../assets/images/icons/phone.svg" alt="" class="phone" />
+        моб.приложение
+      </a>
+      <img src="../assets/images/icons/heart.svg" alt="" class="heart" />
+      <hr class="divider" />
+      <a href="#">РЕГИСТРАЦИЯ</a>
     </div>
   </div>
 </template>
@@ -19,39 +21,66 @@ export default {
 };
 </script>
 
-<style scoped>
-.topnav {
-  background-color: #333;
-  overflow: hidden;
-  margin-left: 160px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 50px;
-
-  position: sticky;
-  top: 0;
-}
-
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #4caf50;
+<style scoped lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap");
+.main {
+  padding: 0 100px;
+  text-align: left;
   color: white;
+  height: 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-family: Fjalla One, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+
+  background: linear-gradient(
+    270.02deg,
+    rgba(29, 42, 158, 0.81) 47.21%,
+    rgba(29, 42, 158, 0) 149.13%
+  );
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+  #logo {
+    font-size: 72px;
+    line-height: 90px;
+    letter-spacing: 0.1em;
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-right-block {
+    width: 750px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .phone {
+      width: 30px;
+      height: 35px;
+    }
+
+    .heart {
+      width: 45px;
+      height: 45px;
+    }
+
+    .divider {
+      width: 90px;
+      height: 0;
+      transform: rotate(-90deg);
+      color: white;
+    }
+  }
 }
 </style>

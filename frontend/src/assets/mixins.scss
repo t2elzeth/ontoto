@@ -1,0 +1,6 @@
+@mixin remove-decoration() {
+  a {
+    text-decoration: none;
+    @content
+  }
+}

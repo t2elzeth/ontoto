@@ -1,82 +1,56 @@
 <template>
   <div class="main">
-    <form @submit.prevent="signUp">
-      <div class="container">
-        <h1>Sign Up</h1>
-        <p>Please fill in this form to create an account.</p>
-        <hr/>
-
+    <div class="container">
+      <FormHeader />
+      <form @submit.prevent="signUp" class="form">
         <FormField
-            :v$field="v$.email"
-            placeholder="Enter email"
-            label-text="Email"
-            form-field="email"
+          :v$field="v$.full_name"
+          placeholder="полное имя"
+          form-field="full_name"
+        />
+        <FormField :v$field="v$.email" placeholder="email" form-field="email" />
+        <FormField
+          :v$field="v$.password"
+          placeholder="пароль"
+          input-type="password"
+          form-field="password"
         />
         <FormField
-            :v$field="v$.full_name"
-            placeholder="Enter full name"
-            label-text="Full name"
-            form-field="full_name"
+          :v$field="v$.password2"
+          placeholder="повторите пароль"
+          input-type="password"
+          form-field="password2"
         />
-        <FormField
-            :v$field="v$.phone"
-            placeholder="Enter phone number"
-            label-text="Phone number"
-            form-field="phone"
-        />
-        <FormField
-            :v$field="v$.password"
-            placeholder="Enter password"
-            label-text="Password"
-            input-type="password"
-            form-field="password"
-        />
-        <FormField
-            :v$field="v$.password2"
-            placeholder="Repeat your password"
-            label-text="Repeat password"
-            input-type="password"
-            form-field="password2"
-        />
-        <FormField
-            :v$field="v$.description"
-            placeholder="Enter description"
-            label-text="Description"
-            form-field="description"
-        />
-
-        <button type="submit" class="register-btn">Sign Up</button>
         <p class="agreement">
-          By creating an account you agree to our
-          <a href="#">Terms & Privacy</a>.
+          Регистрируясь, вы принимаете наши
+          <a href="#">условия конфиденциальности</a> и
+          <a href="#">политику в отношении файлов cookie.</a>
         </p>
-      </div>
-
-      <div class="container signin">
-        <p>Already have an account? <a href="#">Sign in</a>.</p>
-      </div>
-    </form>
+        <button type="submit" class="register-btn">регистрация</button>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-import FormField from "@/components/FormField";
+import FormField from "@/components/form/FormField";
+import FormHeader from "@/components/form/FormHeader";
 
-import {useVuelidate} from "@vuelidate/core";
+import { useVuelidate } from "@vuelidate/core";
 
-import {success, error} from "@/utils/notifications";
-import {formData} from "@/utils/forms";
-import {rules} from "@/utils/validation";
+import { success, error } from "@/utils/notifications";
+import { formData } from "@/utils/forms";
+import { rules } from "@/utils/validation";
 
 export default {
   name: "SignUp",
   components: {
+    FormHeader,
     FormField
   },
   setup() {
-    const signUpFormData = formData.signUp;
-
-    const v$ = useVuelidate(rules.signUp(signUpFormData), signUpFormData);
+    const signUpFormData = formData.signUp,
+      v$ = useVuelidate(rules.signUp(signUpFormData), signUpFormData);
 
     // axios
     //   .post(urls.signUp, signUpFormData)
@@ -87,14 +61,15 @@ export default {
       // Validate data
       v$.value.$touch();
       // If data is invalid
-      if (v$.value.$invalid) return error("Your data is invalid");
+      if (v$.value.$invalid)
+        return error("Введенные данные не корректны!", "Ошибка!");
 
       success("Your account has been successfully created");
     }
 
     return {
       signUp,
-      v$,
+      v$
     };
   }
 };
@@ -102,4 +77,11 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/forms";
+.main {
+  .container {
+    .form {
+      margin-top: 0;
+    }
+  }
+}
 </style>
