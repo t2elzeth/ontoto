@@ -36,11 +36,13 @@
 import FormField from "@/components/form/FormField";
 import FormHeader from "@/components/form/FormHeader";
 
+import axios from "axios";
 import { useVuelidate } from "@vuelidate/core";
 
 import { success, error } from "@/utils/notifications";
 import { formData } from "@/utils/forms";
 import { rules } from "@/utils/validation";
+import { urls } from "@/utils/api";
 
 export default {
   name: "SignUp",
@@ -64,7 +66,19 @@ export default {
       if (v$.value.$invalid)
         return error("Введенные данные не корректны!", "Ошибка!");
 
-      success("Your account has been successfully created");
+      axios
+        .post(urls.signUp, {
+          username: signUpFormData.username.value,
+          email: signUpFormData.email.value,
+          password: signUpFormData.password.value,
+          password2: signUpFormData.password2.value
+        })
+        .then(() => {
+          success("Your account has been successfully created");
+        })
+        .catch(() => {
+          error("Server error!");
+        });
     }
 
     return {

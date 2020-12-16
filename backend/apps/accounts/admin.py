@@ -25,7 +25,7 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                'id',
+                'id', 'username',
                 'email', 'phone', 'description',
                 'date_joined',
                 'is_confirmed',

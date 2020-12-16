@@ -8,9 +8,8 @@ export const auth = {
       }
     };
   },
-  setCredentials: token => localStorage.setItem(tokenKey, token),
-  isAuthenticated: () => this.getToken() || false,
-
+  setCredentials: data => localStorage.setItem(tokenKey, data["auth_token"]),
+  isAuthenticated: () => localStorage.getItem(tokenKey) || false,
   getToken: () => localStorage.getItem(tokenKey),
 
   removeToken: () => localStorage.removeItem(tokenKey)

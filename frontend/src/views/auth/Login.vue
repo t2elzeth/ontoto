@@ -17,7 +17,7 @@
         <button type="submit" class="register-btn">войти</button>
       </form>
       <a href="#" class="get-help">забыли пароль?</a>
-      <!--      <button @click="whoAmI">CLICK ME HARD</button>-->
+      <button @click="logout">CLICK ME HARD</button>
     </div>
   </div>
 </template>
@@ -27,7 +27,6 @@ import FormField from "@/components/form/FormField";
 import FormHeader from "@/components/form/FormHeader";
 
 import axios from "axios";
-
 import { useVuelidate } from "@vuelidate/core";
 
 import { success, error } from "@/utils/notifications";
@@ -53,16 +52,26 @@ export default {
       if (v$.value.$invalid) return error("Your data is invalid");
 
       // If data is valid
-      success("You were logged in successfully").finally(() =>
-        location.reload()
-      );
+      axios
+        .post(urls.login, {
+          email: loginFormData.email.value,
+          password: loginFormData.password.value
+        })
+        .then(res => {
+          success("You were logged in successfully").finally(() =>
+            location.reload()
+          );
 
-      // axios
-      //   .post(urls.login, { email, password })
-      //   .then(res => auth.setCredentials(res.data.auth_token))
-      //   .catch(err => console.log(err));
+          auth.setCredentials(res.data);
+        })
+        .catch(() => error("Internal server error!"));
     }
+
     function logout() {
+      if (!auth.isAuthenticated())
+        return error("Вы уже вышли!", "Ошибка!").finally(() =>
+          location.reload()
+        );
       axios.post(urls.logout, {}, auth.getCredentials());
       auth.removeToken();
     }
@@ -87,6 +96,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/forms";
+
 .form-field {
   margin-bottom: 30px;
 }
