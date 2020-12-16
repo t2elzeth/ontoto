@@ -1,12 +1,12 @@
 <template>
   <div class="main">
     <div class="container">
-      <FormHeader />
+      <FormHeader focus-on="signup" />
       <form @submit.prevent="signUp" class="form">
         <FormField
-          :v$field="v$.full_name"
-          placeholder="полное имя"
-          form-field="full_name"
+          :v$field="v$.username"
+          placeholder="имя пользователя"
+          form-field="username"
         />
         <FormField :v$field="v$.email" placeholder="email" form-field="email" />
         <FormField
@@ -49,8 +49,8 @@ export default {
     FormField
   },
   setup() {
-    const signUpFormData = formData.signUp,
-      v$ = useVuelidate(rules.signUp(signUpFormData), signUpFormData);
+    const signUpFormData = formData.signUp;
+    const v$ = useVuelidate(rules.signUp(signUpFormData), signUpFormData);
 
     // axios
     //   .post(urls.signUp, signUpFormData)

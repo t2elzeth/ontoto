@@ -9,14 +9,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Custom User model for authentication"""
     objects = managers.UserManager()
 
-    email = models.EmailField(
-        verbose_name='email address',
-        max_length=255,
-        unique=True,
-    )
-    phone = models.CharField(max_length=255)
-    full_name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
+    username = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255, unique=True)
+    phone = models.CharField(max_length=255, default="")
+    full_name = models.CharField(max_length=255, default="")
+    description = models.TextField(default="")
 
     is_confirmed = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -27,7 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # No longer need in usernames, email is enough to login
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []  # Email & Password are required by default.
+    REQUIRED_FIELDS = ['username']  # Email & Password are required by default.
 
     @staticmethod
     def prettify_data(data, for_superuser=False):

@@ -7,13 +7,12 @@ class UserRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = [
-            'id', 'email', 'phone', 'description'
+            'id', 'username', 'email', 'phone', 'description'
         ]
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(
-        style={'input_type': 'password'},
         write_only=True,
         required=True
     )
@@ -21,22 +20,15 @@ class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = [
-            'id',
-            'full_name',
+            'username',
             'email',
-            'phone',
             'password',
             'password2',
-            'description'
         ]
         extra_kwargs = {
-            'id': {
-                'read_only': True
-            },
             'password': {
                 'write_only': True,
-                'style': {'input_type': 'password'}
-            },
+            }
         }
 
     def validate(self, data: dict):

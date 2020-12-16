@@ -19,17 +19,18 @@ export default {
   name: "FormHeader",
   props: {
     focusOn: {
-      type: String
+      type: String,
+      required: true
     }
   },
-  setup() {
+  setup(props) {
     const refs = {
       login: ref(),
       signup: ref()
     };
 
     onMounted(() => {
-      console.log(refs.login.value.focus());
+      refs[props.focusOn].value.focus();
     });
 
     return {

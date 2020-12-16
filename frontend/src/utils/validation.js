@@ -2,26 +2,23 @@ import {
   required,
   minLength,
   email,
-  maxLength,
-  sameAs,
-  alpha
+  sameAs
 } from "@vuelidate/validators/dist/raw.esm";
 
 import { getValidator } from "@/utils/validators";
 
 export const constants = {
   minLength: {
-    password: 8,
-    phone: 8,
-    full_name: 5,
-    description: 50
-  },
-  maxLength: {
-    description: 1200
+    username: 8,
+    password: 8
   }
 };
 
 export const rules = {
+  username: {
+    required,
+    minLength: minLength(constants.minLength.username)
+  },
   email: {
     email,
     required
@@ -36,46 +33,21 @@ export const rules = {
       password: this.password
     };
   },
-  full_name: {
-    required,
-    alpha,
-    minLength: minLength(constants.minLength.full_name)
-  },
-  phone: {
-    required,
-    minLength: minLength(constants.minLength.phone)
-  },
-  description: {
-    required,
-    maxLength: maxLength(constants.maxLength.description),
-    minLength: minLength(constants.minLength.description)
-  },
   signUp(formData) {
     return {
+      username: this.username,
       email: this.email,
       password: this.password,
-      password2: { sameAs: sameAs(formData.password) },
-      full_name: this.full_name,
-      phone: this.phone,
-      description: this.description
+      password2: { sameAs: sameAs(formData.password) }
     };
   }
 };
 
 export const messages = {
   validMessage: "все правильно!",
+
+  username: [getValidator.required(), getValidator.minLength("username")],
   email: [getValidator.required(), getValidator.email()],
-  full_name: [
-    getValidator.required(),
-    getValidator.minLength("full_name"),
-    getValidator.alpha()
-  ],
-  phone: [getValidator.required(), getValidator.minLength("phone")],
   password: [getValidator.required(), getValidator.minLength("password")],
-  password2: [getValidator.sameAs("пароли")],
-  description: [
-    getValidator.required(),
-    getValidator.maxLength("description"),
-    getValidator.minLength("description")
-  ]
+  password2: [getValidator.sameAs("пароли")]
 };
