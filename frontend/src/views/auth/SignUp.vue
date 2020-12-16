@@ -43,6 +43,7 @@ import { success, error } from "@/utils/notifications";
 import { formData } from "@/utils/forms";
 import { rules } from "@/utils/validation";
 import { urls } from "@/utils/api";
+import { setTitle } from "@/utils/layouts";
 
 export default {
   name: "SignUp",
@@ -53,6 +54,7 @@ export default {
   setup() {
     const signUpFormData = formData.signUp;
     const v$ = useVuelidate(rules.signUp(signUpFormData), signUpFormData);
+    setTitle("Регистрация");
 
     // axios
     //   .post(urls.signUp, signUpFormData)

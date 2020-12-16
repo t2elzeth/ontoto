@@ -7,3 +7,7 @@ export function getLayout(route, key = "layout") {
     return route.meta[key] || defaultLayout;
   });
 }
+
+export function setTitle(title) {
+  document.title = title;
+}

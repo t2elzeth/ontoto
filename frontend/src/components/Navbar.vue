@@ -2,7 +2,7 @@
   <div class="main">
     <h1 id="logo">ONTOTO</h1>
     <div class="nav-right-block">
-      <a href="#">О НАС</a>
+      <router-link to="/about">О НАС</router-link>
 
       <a href="#">
         <img src="../assets/images/icons/phone.svg" alt="" class="phone" />
@@ -10,7 +10,7 @@
       </a>
       <img src="../assets/images/icons/heart.svg" alt="" class="heart" />
       <hr class="divider" />
-      <a href="#">РЕГИСТРАЦИЯ</a>
+      <router-link to="/signup">РЕГИСТРАЦИЯ</router-link>
     </div>
   </div>
 </template>

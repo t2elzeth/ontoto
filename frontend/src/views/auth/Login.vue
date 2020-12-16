@@ -34,6 +34,7 @@ import { urls } from "@/utils/api";
 import { auth } from "@/utils/auth";
 import { formData } from "@/utils/forms";
 import { rules } from "@/utils/validation";
+import { setTitle } from "@/utils/layouts";
 
 export default {
   name: "Login",
@@ -44,6 +45,8 @@ export default {
   setup() {
     const loginFormData = formData.login,
       v$ = useVuelidate(rules.login(), loginFormData);
+
+    setTitle("Войти");
 
     function login() {
       // Validate data
