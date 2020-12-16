@@ -1,20 +1,27 @@
 <template>
   <div class="choose-action">
-    <a href="#" class="action" :ref="refs.login">
+    <router-link
+      tag="a"
+      class="action"
+      :class="{ active: focusOn === 'login' }"
+      to="/login"
+    >
       ВХОД
       <hr />
-    </a>
-    <a href="#" class="action" :ref="refs.signup">
+    </router-link>
+    <router-link
+      to="/signup"
+      class="action"
+      :class="{ active: focusOn === 'signup' }"
+    >
       РЕГИСТРАЦИЯ
       <hr />
-    </a>
+    </router-link>
   </div>
   <div class="social-auth"></div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-
 export default {
   name: "FormHeader",
   props: {
@@ -22,20 +29,6 @@ export default {
       type: String,
       required: true
     }
-  },
-  setup(props) {
-    const refs = {
-      login: ref(),
-      signup: ref()
-    };
-
-    onMounted(() => {
-      refs[props.focusOn].value.focus();
-    });
-
-    return {
-      refs
-    };
   }
 };
 </script>
@@ -66,17 +59,16 @@ $focus-color: #3c47a5;
     width: 50%;
     height: 100%;
 
-    &:focus {
-      color: $focus-color;
-
-      hr {
-        border-color: $focus-color;
-      }
-    }
-
     hr {
       width: 100%;
       border: 3px solid white;
+    }
+  }
+  .active {
+    color: $focus-color;
+
+    hr {
+      border-color: $focus-color;
     }
   }
 }

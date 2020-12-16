@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="container">
-      <FormHeader />
+      <FormHeader focus-on="login" />
       <form @submit.prevent="login" class="form">
         <FormField
           :v$field="v$.email"
