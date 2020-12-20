@@ -17,7 +17,7 @@
         <button type="submit" class="register-btn">войти</button>
       </form>
       <a href="#" class="get-help">забыли пароль?</a>
-      <button @click="logout">CLICK ME HARD</button>
+      <button @click="whoAmI">CLICK ME HARD</button>
     </div>
   </div>
 </template>
@@ -81,7 +81,7 @@ export default {
 
     function whoAmI() {
       // axios
-      //   .get(urls.whoAmI, auth.getCredentials())
+      //   .post("http://127.0.0.1:8000/pay/elsom/", data, { contentType: 'application/xml' })
       //   .then(res => console.log(res.data))
       //   .catch(err => console.log(err));
       console.log("Salam");

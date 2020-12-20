@@ -7,7 +7,7 @@ class UserRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = [
-            'id', 'username', 'email', 'phone', 'description'
+            'id', 'username', 'full_name', 'email', 'phone', 'description'
         ]
 
 
