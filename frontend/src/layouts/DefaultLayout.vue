@@ -9,7 +9,7 @@
 import Navbar from "@/components/layout/Navbar";
 
 export default {
-  name: "Default",
+  name: "DefaultLayout",
   components: {
     Navbar
   }

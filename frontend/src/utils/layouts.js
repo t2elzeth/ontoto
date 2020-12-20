@@ -1,6 +1,6 @@
 import { computed } from "vue";
 
-export const defaultLayout = "default";
+export const defaultLayout = "default-layout";
 
 export function getLayout(route, key = "layout") {
   return computed(() => {
