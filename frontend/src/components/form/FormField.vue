@@ -26,8 +26,7 @@
 </template>
 
 <script>
-import { getInputFieldValidationClasses } from "@/utils/forms";
-import { messages } from "@/utils/validation";
+import { messages } from "@/utils/forms/validation";
 
 export default {
   name: "FormField",
@@ -39,6 +38,13 @@ export default {
     formField: String
   },
   setup(props) {
+    const getInputFieldValidationClasses = function(field) {
+      return {
+        valid: field.$dirty && !field.$invalid,
+        invalid: field.$dirty && field.$invalid
+      };
+    };
+
     return {
       v$: props.v$field,
 

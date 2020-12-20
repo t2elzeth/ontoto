@@ -32,8 +32,8 @@ import { useVuelidate } from "@vuelidate/core";
 import { success, error } from "@/utils/notifications";
 import { urls } from "@/utils/api";
 import { auth } from "@/utils/auth";
-import { formData } from "@/utils/forms";
-import { rules } from "@/utils/validation";
+import { formData } from "@/utils/forms/forms";
+import { rules as globalRules } from "@/utils/forms/validation";
 import { setTitle } from "@/utils/layouts";
 
 export default {
@@ -43,10 +43,14 @@ export default {
     FormHeader
   },
   setup() {
-    const loginFormData = formData.login,
-      v$ = useVuelidate(rules.login(), loginFormData);
-
     setTitle("Войти");
+
+    const loginFormData = formData.login;
+    const rules = {
+      email: globalRules.email,
+      password: globalRules.password
+    };
+    const v$ = useVuelidate(rules, loginFormData);
 
     function login() {
       // Validate data

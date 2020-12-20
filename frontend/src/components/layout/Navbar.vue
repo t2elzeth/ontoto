@@ -5,10 +5,10 @@
       <router-link to="/about">О НАС</router-link>
 
       <a href="#">
-        <img src="../assets/images/icons/phone.svg" alt="" class="phone" />
+        <img src="../../assets/images/icons/phone.svg" alt="" class="phone" />
         моб.приложение
       </a>
-      <img src="../assets/images/icons/heart.svg" alt="" class="heart" />
+      <img src="../../assets/images/icons/heart.svg" alt="" class="heart" />
       <hr class="divider" />
       <router-link to="/signup">РЕГИСТРАЦИЯ</router-link>
     </div>

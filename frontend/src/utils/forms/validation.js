@@ -5,7 +5,7 @@ import {
   sameAs
 } from "@vuelidate/validators/dist/raw.esm";
 
-import { getValidator } from "@/utils/validators";
+import { getValidator } from "@/utils/forms/validators";
 
 export const constants = {
   minLength: {
@@ -27,18 +27,10 @@ export const rules = {
     required,
     minLength: minLength(constants.minLength.password)
   },
-  login() {
+  password2: sameAsWhat => {
     return {
-      email: this.email,
-      password: this.password
-    };
-  },
-  signUp(formData) {
-    return {
-      username: this.username,
-      email: this.email,
-      password: this.password,
-      password2: { sameAs: sameAs(formData.password) }
+      required,
+      sameAs: sameAs(sameAsWhat)
     };
   }
 };
@@ -49,5 +41,5 @@ export const messages = {
   username: [getValidator.required(), getValidator.minLength("username")],
   email: [getValidator.required(), getValidator.email()],
   password: [getValidator.required(), getValidator.minLength("password")],
-  password2: [getValidator.sameAs("пароли")]
+  password2: [getValidator.required(), getValidator.sameAs("пароли")]
 };

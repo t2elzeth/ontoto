@@ -1,4 +1,4 @@
-import { constants } from "@/utils/validation";
+import { constants } from "@/utils/forms/validation";
 
 export const getValidator = {
   minLength: function(formField) {

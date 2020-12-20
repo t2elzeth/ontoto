@@ -1,33 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home";
+
+import { authRoutes } from "@/router/auth";
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: () => import("@/views/Home")
   },
   {
     path: "/about",
     name: "About",
     component: () => import("@/views/About")
   },
-  {
-    path: "/signup",
-    name: "SignUp",
-    meta: {
-      layout: "default",
-    },
-    component: () => import("@/views/auth/SignUp")
-  },
-  {
-    path: "/login",
-    name: "Login",
-    meta: {
-      layout: "default",
-    },
-    component: () => import("@/views/auth/Login")
-  }
+  ...authRoutes
 ];
 
 const router = createRouter({

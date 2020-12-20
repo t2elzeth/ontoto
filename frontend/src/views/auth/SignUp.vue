@@ -40,8 +40,8 @@ import axios from "axios";
 import { useVuelidate } from "@vuelidate/core";
 
 import { success, error } from "@/utils/notifications";
-import { formData } from "@/utils/forms";
-import { rules } from "@/utils/validation";
+import { formData } from "@/utils/forms/forms";
+import { rules as globalRules } from "@/utils/forms/validation";
 import { urls } from "@/utils/api";
 import { setTitle } from "@/utils/layouts";
 
@@ -52,9 +52,16 @@ export default {
     FormField
   },
   setup() {
-    const signUpFormData = formData.signUp;
-    const v$ = useVuelidate(rules.signUp(signUpFormData), signUpFormData);
     setTitle("Регистрация");
+
+    const signUpFormData = formData.signUp;
+    const rules = {
+      username: globalRules.username,
+      email: globalRules.email,
+      password: globalRules.password,
+      password2: globalRules.password2(signUpFormData.password)
+    };
+    const v$ = useVuelidate(rules, signUpFormData);
 
     // axios
     //   .post(urls.signUp, signUpFormData)
