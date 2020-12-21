@@ -18,7 +18,24 @@
       <hr />
     </router-link>
   </div>
-  <div class="social-auth"></div>
+  <div class="social-auth">
+    <div class="links">
+      <a href="#">
+        <img src="../../assets/images/icons/facebook.svg" alt="Facebook" />
+      </a>
+      <a href="#">
+        <img src="../../assets/images/icons/google-auth.svg" alt="Google" />
+      </a>
+      <a href="#">
+        <img src="../../assets/images/icons/vk.svg" alt="VK" />
+      </a>
+    </div>
+    <div class="or">
+      <hr />
+      или
+      <hr />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -34,6 +51,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../../assets/vars";
 $focus-color: #3c47a5;
 
 .choose-action {
@@ -75,5 +93,35 @@ $focus-color: #3c47a5;
 
 .social-auth {
   height: 145px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  .links {
+    padding: 0 50px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    img {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  .or {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    hr {
+      border-color: $hr-color;
+
+      width: 45%;
+      height: 1px;
+    }
+  }
 }
 </style>

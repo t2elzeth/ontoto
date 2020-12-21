@@ -100,11 +100,4 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/forms";
-.main {
-  .container {
-    .form {
-      margin-top: 0;
-    }
-  }
-}
 </style>

@@ -17,7 +17,7 @@
         <button type="submit" class="register-btn">войти</button>
       </form>
       <a href="#" class="get-help">забыли пароль?</a>
-      <button @click="whoAmI">CLICK ME HARD</button>
+      <!--      <button @click="whoAmI">CLICK ME HARD</button>-->
     </div>
   </div>
 </template>
@@ -103,6 +103,12 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/forms";
+
+.main {
+  .container {
+    height: 750px;
+  }
+}
 
 .form-field {
   margin-bottom: 30px;

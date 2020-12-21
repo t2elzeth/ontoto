@@ -3,7 +3,7 @@ export const authRoutes = [
     path: "/signup",
     name: "SignUp",
     meta: {
-      layout: "default"
+      layout: "default-layout"
     },
     component: () => import("@/views/auth/SignUp")
   },
@@ -11,7 +11,7 @@ export const authRoutes = [
     path: "/login",
     name: "Login",
     meta: {
-      layout: "default"
+      layout: "default-layout"
     },
     component: () => import("@/views/auth/Login")
   }
