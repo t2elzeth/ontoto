@@ -25,7 +25,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   form {
+    margin: 110px 0;
     .search {
       width: 1385px;
       height: 80px;
@@ -42,9 +44,9 @@ export default {
         margin-left: 80px;
 
         &::placeholder {
-          font-family: Rockwell, Comfortaa, cursive;
-          font-style: normal;
-          font-weight: normal;
+          //font-family: Rockwell, Comfortaa, cursive;
+          //font-style: normal;
+          //font-weight: normal;
           font-size: 35px;
           letter-spacing: 0.055em;
 
@@ -69,9 +71,15 @@ export default {
         border-top-right-radius: 25px;
         border-bottom-right-radius: 25px;
 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         .choose-category-btn {
           border: none;
           background: none;
+
+          font-size: 24px;
         }
       }
     }

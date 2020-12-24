@@ -10,7 +10,7 @@
       </a>
       <img src="../../assets/images/icons/heart.svg" alt="" class="heart" />
       <hr class="divider" />
-      <router-link to="/signup">РЕГИСТРАЦИЯ</router-link>
+      <router-link to="/signup">ВХОД / РЕГИСТРАЦИЯ</router-link>
     </div>
   </div>
 </template>
