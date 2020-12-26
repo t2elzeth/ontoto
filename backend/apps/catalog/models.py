@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
-from utils.decorators import control_save
+from utils.decorators import save_method
 
 User = get_user_model()
 
@@ -35,11 +35,11 @@ class Product(models.Model):
 
     date_created = models.DateField(default=timezone.now)
 
-    @control_save
+    @save_method
     def update_orders_number(self, *args, **kwargs):
         self.orders_number += 1
 
-    @control_save
+    @save_method
     def count_favorites_number(self, *args, **kwargs):
         self.favorites_number = self.favorite_products.count()
 
