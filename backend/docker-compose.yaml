@@ -6,3 +6,4 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8920:8000"
+    image: ibontoto
