@@ -3,15 +3,7 @@ from rest_framework import serializers
 from . import models
 
 
-class UserRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.User
-        fields = [
-            'id', 'username', 'full_name', 'email', 'phone', 'description'
-        ]
-
-
-class UserCreateSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
@@ -19,10 +11,14 @@ class UserCreateSerializer(serializers.ModelSerializer):
         fields = [
             'username',
             'email',
+            'full_name',
+            'phone',
+            'description',
             'password',
             'password2',
         ]
         extra_kwargs = {'password': {'write_only': True}}
+        read_only_fields = ['id']
 
     def validate(self, data: dict):
         """Custom data validation"""
