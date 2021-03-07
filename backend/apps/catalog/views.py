@@ -1,32 +1,19 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
 
 from . import models, serializers
 
 
-class ProductsListView(generics.ListAPIView):
-    serializer_class = serializers.ProductListRetrieveUpdateDestroySerializer
+class ProductViewSet(viewsets.ModelViewSet):
+    serializers = serializers.ProductSerializer
     queryset = models.Product.objects.all()
-
-
-class ProductCreateView(generics.CreateAPIView):
-    serializer_class = serializers.ProductCreateSerializer
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-
-class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = serializers.ProductListRetrieveUpdateDestroySerializer
-    queryset = models.Product.objects.all()
-
     def perform_update(self, serializer):
-        instance = self.get_object()
-        if not instance.price == serializer.validated_data.get('price'):
-            serializer.validated_data.update({'old_price': instance.price})
-
+        if not self.get_object().price == serializer.validated_data.get('price'):
+            serializer.validated_data.update({'old_price': self.get_object().price})
         serializer.save()
 
 
