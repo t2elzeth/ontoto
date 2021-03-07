@@ -26,39 +26,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']  # Email & Password are required by default.
 
-    @staticmethod
-    def prettify_data(data, for_superuser=False):
-        """
-        Filters the data in `validated_data`
-        so that it can be passed to the `User` model
-        """
-        email = data.get('email')
-
-        # Remove unnecessary data
-        data.pop('password', None)
-        data.pop('password2', None)
-
-        # Check if its for superuser
-        if for_superuser:
-            # Put data related only to superusers
-            data.update({
-                # Superuser does not really need a full name
-                'full_name': 'SuperUser. No full name specified',
-
-                # Same as full_name
-                'phone': '',
-
-                # Set only admins related fields
-                'is_superuser': True,
-                'is_staff': True
-            })
-
-        # Prettify existing data
-        data.update({
-            'email': managers.UserManager.normalize_email(email)
-        })
-        return data
-
     def get_username(self):
         """Returns field used for authentication"""
         return getattr(self, self.USERNAME_FIELD)
