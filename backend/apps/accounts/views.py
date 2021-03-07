@@ -17,12 +17,12 @@ class MeViewSet(ModelViewSet):
 
     @action(methods=['patch'], detail=False)
     def upgrade(self, request):
-        self.request.user.is_premium = True
+        self.request.user.is_confirmed = True
         self.request.user.save()
         return Response({"success": "Successfully upgraded to premium!"}, status=HTTP_202_ACCEPTED)
 
     @action(methods=['patch'], detail=False)
     def downgrade(self, request):
-        self.request.user.is_premium = False
+        self.request.user.is_confirmed = False
         self.request.user.save()
         return Response({"success": "Successfully downgraded!"}, status=HTTP_202_ACCEPTED)
