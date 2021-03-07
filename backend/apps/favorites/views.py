@@ -1,53 +1,26 @@
-from rest_framework import generics
 from rest_framework import permissions
+from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
 
-from cart.permissions import IsOwner
 from . import models, serializers
 
 
-class FavoriteProductListView(generics.ListAPIView):
-    serializer_class = serializers.FavoriteProductListSerializer
-    queryset = models.FavoriteProduct.objects.all()
-
-
-class FavoriteProductCreateView(generics.CreateAPIView):
-    serializer_class = serializers.FavoriteProductCreateSerializer
+class FavoriteProductViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.FavoriteProductSerializer
     queryset = models.FavoriteProduct.objects.all()
     permission_classes = [
         permissions.IsAuthenticated,
     ]
 
     def perform_create(self, serializer):
-        user = self.get_user()
-
         product = serializer.validated_data.get('product')
 
-        favorite, _ = user.favorites.get_or_create(user=user)
+        favorite, _ = self.request.user.favorites.get_or_create(user=self.request.user)
 
         queryset = favorite.favorite_products.filter(product__id=product.id)
         if queryset.exists():
-            error = {
-                'message': 'Cannot add product to Favorites. It already exists there'
-            }
-            raise ValidationError(error)
-
-        serializer.validated_data.update({
-            'user': user,
-            'favorite': favorite
-        })
-        serializer.save()
-
-    def get_user(self):
-        return self.request.user
-
-
-class FavoriteProductDetailView(generics.RetrieveDestroyAPIView):
-    serializer_class = serializers.FavoriteProductListSerializer
-    queryset = models.FavoriteProduct.objects.all()
-    permission_classes = [
-        IsOwner
-    ]
+            raise ValidationError({'message': 'Cannot add product to Favorites. It already exists there'})
+        serializer.save(user=self.request.user, favorite=favorite)
 
     def perform_destroy(self, instance: models.FavoriteProduct):
         product = instance.product
