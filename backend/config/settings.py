@@ -1,4 +1,3 @@
-import logging
 import os
 import sys
 from pathlib import Path
@@ -6,12 +5,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
-
-logging.basicConfig(
-    filename=os.path.join(BASE_DIR, 'app.log'),
-    filemode='w',
-    level=logging.INFO
-)
 
 SECRET_KEY = 's=qsfq&n_%_&mxup)__aws(wnjgpj$41pc-=-82gle0e6yeyu@'
 DEBUG = True
