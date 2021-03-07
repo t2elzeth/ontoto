@@ -6,7 +6,7 @@ from .permissions import IsOwner, CartIsNotInOrder
 
 
 class CartViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.CartProductListSerializer
+    serializer_class = serializers.CartProductSerializer
     queryset = models.CartProduct.objects.all()
     permission_classes = [IsAuthenticated]
 
