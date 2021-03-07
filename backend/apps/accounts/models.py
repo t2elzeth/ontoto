@@ -26,10 +26,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']  # Email & Password are required by default.
 
-    def get_username(self):
-        """Returns field used for authentication"""
-        return getattr(self, self.USERNAME_FIELD)
-
     def get_full_name(self):
         """Returns full name of user"""
         return self.full_name
